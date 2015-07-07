@@ -1,0 +1,82 @@
+<html>
+<head>
+  <title>MyMatch</title>
+  <link href='http://fonts.googleapis.com/css?family=Roboto|Slabo+27px&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+
+  <style>
+    body {
+      // font-family: 'Roboto Slab', serif;
+      font-family: 'Roboto Slab', serif;
+    }
+  </style>
+</head>
+
+<body>
+
+<form action="api.php" method='post'>
+<fieldset>
+<table>
+<tr><td>
+  <fieldset>
+    <legend>Result Format (回傳格式)</legend>
+    <input type='radio' name='format' value='table' checked> TABLE <br/>
+    <input type='radio' name='format' value='plain'> PLAIN TEXT <br/>
+    <input type='radio' name='format' value='json'> JSON <br/>
+    <input type='radio' name='format' value='csv'> CSV <br/>
+  </fieldset>
+</td><td>
+  <fieldset>
+    <legend>Against Source (比對資料來源)</legend>
+    <div id='sources'>
+      <input type='radio' name='against' value='' checked> ALL <br/>
+    </div>
+  </fieldset>
+</td><td>
+  <fieldset>
+    <legend>Only Best Result (只回傳最符合的結果)</legend>
+    <input type='radio' name='best' value='yes' checked> YES (FAST AND SIMPLE) <br/>
+    <input type='radio' name='best' value='mid'> MEDIUM (FAST AND INFORMATIVE)<br/>
+    <input type='radio' name='best' value='no'> NO (SLOW AND MOST INFORMATIVE) <br/>
+  </fieldset>
+</td></tr>
+</table>
+</fieldset>
+
+<table>
+<tr><td>
+<br/>
+<fieldset>
+  <legend>Match Names</legend>
+  <textarea name="names" rows='20' style="width:500px;"></textarea><br/>
+</fieldset>
+</td></tr>
+<tr><td>
+<fieldset>
+  <legend>GOGOGO</legend>
+  <input type='submit' name='query' value='submit'/>
+</fieldset>
+</td></tr>
+</table>
+</form>
+
+<div id="citations">
+<div>Data Citations</div>
+</div>
+
+<script>
+
+
+$.get("count.php", function (data) {
+  for (var i=0; i<data.length; i++) {
+    //$("#"+data[i].source+"_num").html(data[i].count);
+    $("#sources").html($("#sources").html() + "<input type='radio' name='against' value='"+data[i].id+"'> "+data[i].name+": <span>"+data[i].count+"</span> <a href='"+data[i].url+"'>("+data[i].version+")</a><br/>");
+    $("#citations").html($("#citations").html() + "<li>"+data[i].citation+"</li>");
+  }
+}, 'json')
+
+
+</script>
+
+</body>
+</html>

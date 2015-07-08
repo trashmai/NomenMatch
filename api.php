@@ -199,6 +199,7 @@ function render_table ($data, $time, $hardcsv=false) {
 	global $against, $best;
 
 	$not_show = array(
+		'name_cleaned',
 		'url_id',
 		'a_url_id',
 		'kingdom',
@@ -207,6 +208,10 @@ function render_table ($data, $time, $hardcsv=false) {
 		'order',
 	);
 
+	echo "<head>";
+	echo "<script src='https://code.jquery.com/jquery-2.1.4.min.js'></script>";
+	echo "<script src='./js/diff.js'></script>";
+	echo "</head>";
 
 	$prev_name = "";
 	$row_class = "even";
@@ -255,7 +260,7 @@ function render_table ($data, $time, $hardcsv=false) {
 			$serial_no = $nidx + 1;
 			$row_class = color_class($nidx);
 
-			echo "<tr class='$row_class'><td>$serial_no</td><td>";
+			echo "<tr class='$row_class row_result' id='row_".$serial_no."'><td>$serial_no</td><td>";
 
 			$ncs = $d['namecode'];
 			$ancs = $d['accepted_namecode'];
@@ -325,6 +330,8 @@ function render_table ($data, $time, $hardcsv=false) {
 			$d['matched'] = str_replace("|", "<br/>", $d['matched']);
 			$d['type'] = str_replace("|", "<br/>", $d['type']);
 
+			$d['name'] = "<span data='" . $d['name_cleaned'] . "'>" . $d['name'] . "</span>";
+
 
 			foreach ($not_show as $ns) {
 				unset($d[$ns]);
@@ -340,6 +347,7 @@ function render_table ($data, $time, $hardcsv=false) {
 		}
 	}
 	echo "</table>\n";
+	echo "<script src='./js/diffName.js'></script>";
 }
 
 function render_plain ($data, $time) {

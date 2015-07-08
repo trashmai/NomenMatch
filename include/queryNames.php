@@ -48,6 +48,7 @@ function queryNames ($name, $against, $best) {
 //		return null;
 		return	array('N/A' => array(
 					'name' => $name,
+					'name_cleaned' => $name_cleaned,
 					'matched' => 'N/A',
 					'accepted_namecode' => array(),
 					'namecode' => array(),
@@ -178,7 +179,7 @@ function queryNames ($name, $against, $best) {
 	}
 
 	foreach ($all_matched_tmp as $m) {
-		$all_matched[$m['matched']] = array_merge(array('name' => $name), $m);
+		$all_matched[$m['matched']] = array_merge(array('name' => $name, 'name_cleaned' => $name_cleaned), $m);
 	}
 /*
 echo "<xmp>";
@@ -306,6 +307,7 @@ function similar_char($a, $b, $aplus1='', $bplus1='') {
 	$similar_sets = array(
 		array('r' ,'m', 'n'),
 		array('a' , 'd'),
+		array('a' , 'u'),
 		array('c' , 'o'),
 		array('e' , 'o'),
 	);

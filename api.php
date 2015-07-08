@@ -230,6 +230,7 @@ function render_table ($data, $time, $hardcsv=false) {
 
 	echo "query time: " . round($time, 3) . " s<br/>";
 	echo "memory usage: " . round(memory_get_usage(true) / (1024 * 1024), 1) . " MB<br/>";
+	echo "Legend: <span style='color:red;'>removed</span> <span style='color:blue;'>added</span> <span style='color:grey;'>common</span>";
 
 	echo "<table>";
 
@@ -330,8 +331,7 @@ function render_table ($data, $time, $hardcsv=false) {
 			$d['matched'] = str_replace("|", "<br/>", $d['matched']);
 			$d['type'] = str_replace("|", "<br/>", $d['type']);
 
-			$d['name'] = "<span data='" . $d['name_cleaned'] . "'>" . $d['name'] . "</span>";
-
+			$d['name'] = "<span name_cleaned='" . $d['name_cleaned'] . "'>" . $d['name'] . "</span>";
 
 			foreach ($not_show as $ns) {
 				unset($d[$ns]);

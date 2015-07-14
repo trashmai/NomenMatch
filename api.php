@@ -11,7 +11,9 @@ require_once "./include/queryNames.php";
 $format = (!empty($_REQUEST['format']))?$_REQUEST['format']:'';
 $against = (!empty($_REQUEST['against']))?$_REQUEST['against']:'';
 $best = (!empty($_REQUEST['best']))?$_REQUEST['best']:'yes';
-$ep = (!empty($_REQUEST['ep']))?$_REQUEST['ep']:'http://localhost:8983/solr/taxa/select';
+$ep = (!empty($_REQUEST['ep']))?$_REQUEST['ep']:file_get_contents("../conf/solr_endpoint");
+
+$ep = trim($ep, " /\r\n");
 
 $res = array();
 

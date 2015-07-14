@@ -1,23 +1,26 @@
 <?php
 
+require_once "../conf/solr_endpoint.php";
 require_once "../include/functions.php";
 
-$query_url = "http://localhost:8983/solr/taxa/select?q=*:*&rows=0&wt=json&facet=true&facet.field=source";
+$ep = trim(file_get_contents("../conf/solr_endpoint"), " /\r\n");
+
+$query_url = $ep . "/select?q=*:*&rows=0&wt=json&facet=true&facet.field=source";
 $f_jo = json_decode(file_get_contents($query_url));
 
 $source = @$argv[1];
 if ((!empty($source)) && preg_match('/[a-zA-Z\_]+/', $source) && ($source !== 'all')) {
-	echo "http://localhost:8983/solr/taxa/update?stream.body=" . urlencode('<delete><query>source:'.$source.'</query></delete>') . "&commit=true";
-	exec("curl http://localhost:8983/solr/taxa/update?commit=true -H 'Content-Type: text/xml' --data-binary '<delete><query>source:$source</query></delete>'");
+	echo $ep . "/update?stream.body=" . urlencode('<delete><query>source:'.$source.'</query></delete>') . "&commit=true";
+	exec("curl " . $ep . "/update?commit=true -H 'Content-Type: text/xml' --data-binary '<delete><query>source:$source</query></delete>'");
 }
 elseif ($source==='all') {
-	echo ("curl http://localhost:8983/solr/taxa/update?commit=true -H 'Content-Type: text/xml' --data-binary '<delete><query>source:*</query></delete>'");
-	exec("curl http://localhost:8983/solr/taxa/update?commit=true -H 'Content-Type: text/xml' --data-binary '<delete><query>source:*</query></delete>'");
+	echo ("curl " . $ep . "/update?commit=true -H 'Content-Type: text/xml' --data-binary '<delete><query>source:*</query></delete>'");
+	exec("curl " . $ep . "/update?commit=true -H 'Content-Type: text/xml' --data-binary '<delete><query>source:*</query></delete>'");
 }
 else {
 	echo "
 Usage:
-php clean_source.php [source_name|all]
+php clean_source.php {source_id|all}
 
 Source Name(s):\n";
 

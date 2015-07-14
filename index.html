@@ -56,7 +56,7 @@
 <td>
   <fieldset>
     <legend>Solr Endpoint</legend>
-    <input id='solr_endpoint' type='radio' name='ep' value='http://localhost:8983/solr/taxa/select' checked> DEFAULT <br/>
+    <input id='solr_endpoint' type='radio' name='ep' value='http://localhost:8983/solr/taxa' checked> DEFAULT <br/>
   </fieldset>
 </td>
 
@@ -87,15 +87,20 @@
 
 <script>
 
-var ep = encodeURIComponent($('#solr_endpoint').val());
-$.get("count.php?ep=" + ep, function (data) {
-  for (var i=0; i<data.length; i++) {
-    //$("#"+data[i].source+"_num").html(data[i].count);
-    $("#sources").html($("#sources").html() + "<input type='radio' name='against' value='"+data[i].id+"'> "+data[i].name+": <span>"+data[i].count+"</span> <a href='"+data[i].url+"'>("+data[i].version+")</a><br/>");
-    $("#citations").html($("#citations").html() + "<li>"+data[i].citation+"</li>");
-  }
-}, 'json')
+// var ep = encodeURIComponent($('#solr_endpoint').val());
 
+$.get("./conf/solr_endpoint", function (solr_endpoint) {
+  var ep = solr_endpoint;
+  $('#solr_endpoint').val(ep);
+  ep_encoded = encodeURIComponent(ep);
+  $.get("count.php?ep=" + ep_encoded, function (data) {
+    for (var i=0; i<data.length; i++) {
+      //$("#"+data[i].source+"_num").html(data[i].count);
+      $("#sources").html($("#sources").html() + "<input type='radio' name='against' value='"+data[i].id+"'> "+data[i].name+": <span>"+data[i].count+"</span> <a href='"+data[i].url+"'>("+data[i].version+")</a><br/>");
+      $("#citations").html($("#citations").html() + "<li>"+data[i].citation+"</li>");
+    }
+  }, 'json')
+});
 
 </script>
 

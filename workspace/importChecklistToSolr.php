@@ -3,10 +3,13 @@
 require_once "../include/cleanname.inc";
 require_once "../include/treat_word.inc";
 
+$ep = trim(file_get_contents("../conf/solr_endpoint"), " /\r\n");
+
 if (empty($argv[1])) {
 	echo "
 Usage:
-php importChecklistToSolr.php [csv_file_path]
+php importChecklistToSolr.php {/path/to/source_data.csv} [source_id]
+if [source_id] is empty, \"source_data\" will be used as the source_id  
 
 Example(s):
 ";
@@ -19,6 +22,7 @@ Example(s):
 
 
 function submitJson($dat, $tmp_path="./tmp/save_storage.json") {
+	global $ep;
 	static $total = 0;
 	if (!empty($dat)) {
 		$numString = ($total + 1) . "-" . ($total + count($dat));
@@ -33,7 +37,7 @@ function submitJson($dat, $tmp_path="./tmp/save_storage.json") {
 		}
 
 		file_put_contents($json_path, $json);
-		$jf = "curl 'http://localhost:8983/solr/taxa/update/json?commit=true' --data-binary @".$json_path." -H 'Content-type:application/json'";
+		$jf = "curl '" . $ep . "/update/json?commit=true' --data-binary @".$json_path." -H 'Content-type:application/json'";
 		$response = exec($jf, $out);
 //		var_dump($out);
 		$total+=count($dat);
@@ -47,7 +51,7 @@ $ret = array();
 $file = (empty($argv[1]))?"":$argv[1];
 $fp = fopen($file, "r");
 
-$source = basename($file, '.csv');
+$source = (empty($argv[2]))?basename($file, '.csv'):$argv[2];
 
 while ($vals = fgetcsv($fp, 0, "\t" )) {
 	$vals = array_map("trim", $vals, array_fill(0, count($vals), "\r\n\t ,."));

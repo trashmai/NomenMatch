@@ -19,11 +19,11 @@ if (!empty($name)) {
 }
 //*/
 
-function queryNames ($name, $against, $best, $ep='http://localhost:8983/solr/taxa/select') {
+function queryNames ($name, $against, $best, $ep) {
 
 	if (empty($ep)) return false;
 
-	$ep .= '?wt=json&q=*:*';
+	$ep .= '/select?wt=json&q=*:*';
 	// $ep = 'http://localhost:8983/solr/taxa/select?wt=json&q=*:*';
 	// $ep = 'http://140.109.28.72/solr4/taxa/select?wt=json&q=*:*';
 

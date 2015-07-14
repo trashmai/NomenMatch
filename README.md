@@ -30,12 +30,17 @@ Easiest way to set up a solr instance compatible to MyMatch:
 ```
 java -jar start.jar
 ```
-and how to stop running:  
+The endpoint will be:
+```
+http://localhost:8983/solr
+```
+
+How to stop running:  
 ```
 ps aux | grep java
 kill [pid]
 ```
-That's it!
+That's it!  
 
 Set Solr Endpoint URL
 -----

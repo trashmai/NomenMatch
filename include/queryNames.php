@@ -19,7 +19,14 @@ if (!empty($name)) {
 }
 //*/
 
-function queryNames ($name, $against, $best) {
+function queryNames ($name, $against, $best, $ep='http://localhost:8983/solr/taxa/select') {
+
+	if (empty($ep)) return false;
+
+	$ep .= '?wt=json&q=*:*';
+	// $ep = 'http://localhost:8983/solr/taxa/select?wt=json&q=*:*';
+	// $ep = 'http://140.109.28.72/solr4/taxa/select?wt=json&q=*:*';
+
 	extract_results("", "", $reset=true);
 	// mix2; work with latin part b2, c2, and suggestions of latin part b2, c2
 	$mix2 = array();
@@ -79,8 +86,6 @@ function queryNames ($name, $against, $best) {
 
 
 	// Type 1
-	$ep = 'http://localhost:8983/solr/taxa/select?wt=json&q=*:*';
-	// $ep = 'http://140.109.28.72/solr4/taxa/select?wt=json&q=*:*';
 	$query_url_1 = $ep . '&fq=canonical_name:"' . urlencode($name_cleaned) . '"';
 	extract_results($query_url_1, "Type 1: Full match", $reset=false, $against);
 

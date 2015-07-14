@@ -10,7 +10,8 @@ require_once "./include/queryNames.php";
 
 $format = (!empty($_REQUEST['format']))?$_REQUEST['format']:'';
 $against = (!empty($_REQUEST['against']))?$_REQUEST['against']:'';
-$best = (!empty($_REQUEST['best']))?$_REQUEST['best']:'best';
+$best = (!empty($_REQUEST['best']))?$_REQUEST['best']:'yes';
+$ep = (!empty($_REQUEST['ep']))?$_REQUEST['ep']:'http://localhost:8983/solr/taxa/select';
 
 $res = array();
 
@@ -32,7 +33,7 @@ foreach ($names as $nidx => $name) {
 	$name_cleaned = canonical_form(trim($name, " \t\r\n.,;|"), true);
 	//if (empty($name)) continue;
 
-	$all_matched = queryNames($name, $against, $best);
+	$all_matched = queryNames($name, $against, $best, $ep);
 
 	//ksort($all_matched);
 	foreach ($all_matched as $matched_name => $matched) {

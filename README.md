@@ -17,9 +17,25 @@ Dependency
 ------
 - Http Server
 - PHP 5+
+- JAVA 7+
 - Solr 4  
-Install and run solr 4 with a core using schema.xml and solrconfig.xml in conf/solr-config  
-(It's should also work with other versions of solr with appropriate adjustment to schema.xml and solrconfig.xml)
+Download and run solr 4 (http://archive.apache.org/dist/lucene/solr/4.9.1/) with a core using schema.xml and solrconfig.xml in conf/solr-config  
+(It's should also work with other versions of solr with appropriate adjustment to schema.xml and solrconfig.xml)  
+
+Easiest way to set up a solr instance compatible to MyMatch:
+-----
+- Download and extract solr 4.9.1  
+- copy schema.xml and solrconfig.xml in conf/solr-config to [extracted solr]/example/solr/collection1/conf/  
+- cd to [extracted solr]/example/ and run  
+```
+java -jar start.jar
+```
+and how to stop running:  
+```
+ps aux | grep java
+kill [pid]
+```
+That's it!
 
 Set Solr Endpoint URL
 -----

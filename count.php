@@ -3,8 +3,10 @@
 require_once "./include/functions.php";
 
 $src_conf = read_src_conf();
+$ep = (!empty($_REQUEST['ep']))?$_REQUEST['ep']:'http://localhost:8983/solr/taxa/select';
 
-$query_url = "http://localhost:8983/solr/taxa/select?q=*:*&rows=0&wt=json&facet=true&facet.field=source";
+
+$query_url = $ep . "?q=*:*&rows=0&wt=json&facet=true&facet.field=source";
 $f_jo = json_decode(file_get_contents($query_url));
 $fieldCounts = array();
 foreach ($f_jo->facet_counts->facet_fields->source as $idx => $fieldCount) {
@@ -25,14 +27,5 @@ foreach ($f_jo->facet_counts->facet_fields->source as $idx => $fieldCount) {
 }
 
 echo json_encode($fieldCounts);
-
-return;
-
-/*
-$source = @$_REQUEST['source'];
-$jo = json_decode(file_get_contents("http://localhost:8983/solr/taxa/select?q=*:*&rows=0&wt=json&fq=source:$source"));
-
-echo json_encode(array('source' => $source, 'count' => $jo->response->numFound));
-//*/
 
 ?>

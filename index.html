@@ -88,7 +88,7 @@
 <script>
 
 
-$.get("count.php", function (data) {
+$.get("count.php?ep=http://localhost:8983/solr/taxa/select", function (data) {
   for (var i=0; i<data.length; i++) {
     //$("#"+data[i].source+"_num").html(data[i].count);
     $("#sources").html($("#sources").html() + "<input type='radio' name='against' value='"+data[i].id+"'> "+data[i].name+": <span>"+data[i].count+"</span> <a href='"+data[i].url+"'>("+data[i].version+")</a><br/>");

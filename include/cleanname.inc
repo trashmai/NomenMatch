@@ -1,5 +1,26 @@
 <?php
 
+/**
+ * Orignal designed by Patrick Leary, Encyclopedia of Life
+ * With slight mods by David Shorthouse, Encyclopedia of Life for use as a stand-alone class
+ * Modified by Jims Hsu .TaiEOL and Jason Mai
+
+   This program is free software; you can redistribute it and/or
+   modify it under the terms of the GNU General Public License
+   as published by the Free Software Foundation; either version 2
+   of the License, or (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ */
+
+
 error_reporting(E_WARNING);
 
 define("UPPER","A-ZÀÂÅÅÃÄÁÆČÇÉÈÊËÍÌÎÏÑÓÒÔØÕÖÚÙÛÜßĶŘŠŞŽŒ");
@@ -191,7 +212,7 @@ function canonical_form($string, $subgen_skip=false, $sp_keep=false){
               continue;
             }
 
-            // 20150702 Mai edit: skip only when junk is not in junk position
+            // 20150702 Mai edit: skip only when junk(hybrid character: x) is not in it's own position
             if (!(($subgen_skip && ($i==1) && $words[$i] !== 'x') || ((!$subgen_skip) && ($i==2) && $words[$i] !== 'x'))) {
               if(@$sci_parts[$words[$i]] || @$author_parts[$words[$i]] || @$junk_parts[$words[$i]]) {
                 continue;//發現有非拉丁文部份,跳過後面程序,直接往下個$i

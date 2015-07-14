@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * By Tony Rees
+ * http://www.cmar.csiro.au/datacentre/taxamatch.htm
+ */
+
 function treat_word ($str2, $strip_ending = false) {
 	$temp2 = '';
 	$start_letter = '';

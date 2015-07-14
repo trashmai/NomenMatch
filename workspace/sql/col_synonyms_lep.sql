@@ -1,0 +1,2 @@
+/* 同物異名 */
+select s.original_id, t.original_id, concat(ss.genus, ' ', ss.species, ' ', ss.infraspecies), nk.hash, nk2.hash, ss2.family, ss2.order, ss2.class, ss2.phylum, ss2.kingdom from synonym s join taxon t on s.taxon_id = t.id join _search_scientific ss on s.id=ss.id join _natural_keys nk on nk.id=s.id join _natural_keys nk2 on nk2.id=s.taxon_id left join _search_scientific ss2 on ss2.id = t.id where nk.name_code is not null INTO OUTFILE '/tmp/col_synonyms.csv'  FIELDS TERMINATED BY '\t'  LINES TERMINATED BY '\n';

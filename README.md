@@ -94,4 +94,8 @@ to removee a specific source from solr, or run
 php clean_source.php all
 ```
 to remove all sources at once.  
-If this script doesn't work, usually it means java heap space out of memory. Try to restart solr and then run again.
+If this script doesn't work, usually it means java heap space out of memory. Try to restart solr and then run again.  
+
+Demo
+-----
+http://twebi.net/queryNames/

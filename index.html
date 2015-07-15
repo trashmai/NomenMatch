@@ -1,14 +1,30 @@
 <html>
 <head>
   <title>MyMatch</title>
+
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">  
   <link href='http://fonts.googleapis.com/css?family=Roboto|Slabo+27px&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
   <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 
   <style>
+
     body {
       // font-family: 'Roboto Slab', serif;
       font-family: 'Roboto Slab', serif;
     }
+
+    a {
+      color: #428BC9;
+    }
+
+    a:visited {
+      color: #2a6496;
+    }
+
+    a:hover {
+      color: #428BC9;
+    }
+
   </style>
 </head>
 
@@ -23,6 +39,8 @@
   ga('send', 'pageview');
 
 </script>
+
+<h2>Welcome to <a target='_blank' href='https://github.com/trashmai/MyMatch'>MyMatch</a>!</h2>
 
 <form action="api.php" method='post'>
 <fieldset>
@@ -56,7 +74,8 @@
 <td>
   <fieldset>
     <legend>Solr Endpoint</legend>
-    <input id='solr_endpoint' type='radio' name='ep' checked> DEFAULT <br/>
+    <input class='solr_endpoints' id='default_endpoint' type='radio' name='ep' checked> <span id='default_endpoint_name'>DEFAULT</span> (<span id='default_endpoint_host'></span>)<br/>
+    <input class='solr_endpoints' type='radio' name='ep' value='http://example.org/solr'> Test solr endpoint selection <br/>
   </fieldset>
 </td>
 
@@ -68,39 +87,75 @@
 <tr><td>
 <br/>
 <fieldset>
-  <legend>Match Names</legend>
+  <legend>Species Names</legend>
   <textarea name="names" rows='20' style="width:500px;"></textarea><br/>
 </fieldset>
 </td></tr>
 <tr><td>
 <fieldset>
   <legend>GOGOGO</legend>
-  <input type='submit' name='query' value='submit'/>
+  <input id='submit_query' type='submit' name='query' value='submit'/>
 </fieldset>
 </td></tr>
 </table>
 </form>
 
 <div id="citations">
-<div>Data Citations</div>
 </div>
+
+
+<div id='source_tpl' style='display:none'><input type='radio' name='against' value='' checked> ALL <br/></div>
+<div id='citation_tpl' style='display:none'><div>Data Citations</div></div>
 
 <script>
 
-// var ep = encodeURIComponent($('#solr_endpoint').val());
-
+// read info from default solr endpoint
 $.get("./conf/solr_endpoint", function (solr_endpoint) {
   var ep = solr_endpoint;
-  $('#solr_endpoint').val(ep);
+  // $('#default_endpoint_host').text(ep.split('//')[1].split('/')[0].split(':')[0].replace('localhost', window.location.host));
+  $('#default_endpoint_host').text(ep.replace('localhost', window.location.host).replace('\n', ''));
+  $('#default_endpoint').val(ep);
   ep_encoded = encodeURIComponent(ep);
   $.get("count.php?ep=" + ep_encoded, function (data) {
-    for (var i=0; i<data.length; i++) {
-      //$("#"+data[i].source+"_num").html(data[i].count);
-      $("#sources").html($("#sources").html() + "<input type='radio' name='against' value='"+data[i].id+"'> "+data[i].name+": <span>"+data[i].count+"</span> <a href='"+data[i].url+"'>("+data[i].version+")</a><br/>");
-      $("#citations").html($("#citations").html() + "<li>"+data[i].citation+"</li>");
+    if (data.length > 0) {
+      $("#sources").html($("#source_tpl").html());
+      $("#citations").html($("#citation_tpl").html());
+      for (var i=0; i<data.length; i++) {
+        //$("#"+data[i].source+"_num").html(data[i].count);
+        $("#sources").html($("#sources").html() + "<input type='radio' name='against' value='"+data[i].id+"'> "+data[i].name+": <span>"+data[i].count+"</span> <a href='"+data[i].url+"'>("+data[i].version+")</a><br/>");
+        $("#citations").html($("#citations").html() + "<li>"+data[i].citation+"</li>");
+      }
+      $('#submit_query').attr('disabled', false);
     }
   }, 'json')
 });
+
+
+// read info from user-selected solr endpoint
+$('.solr_endpoints').change(function (e) {
+  var ep_encoded = encodeURIComponent(this.value);
+  $.get("count.php?ep=" + ep_encoded, function (data) {
+    if (data.length > 0) {
+      $("#sources").html($("#source_tpl").html());
+      $("#citations").html($("#citation_tpl").html());
+      for (var i=0; i<data.length; i++) {
+        //$("#"+data[i].source+"_num").html(data[i].count);
+        $("#sources").html($("#sources").html() + "<input type='radio' name='against' value='"+data[i].id+"'> "+data[i].name+": <span>"+data[i].count+"</span> <a href='"+data[i].url+"'>("+data[i].version+")</a><br/>");
+        $("#citations").html($("#citations").html() + "<li>"+data[i].citation+"</li>");
+      }
+      $('#submit_query').attr('disabled', false);
+    }
+    else {
+        $("#sources").html("no source");
+        $("#citations").html($("#citation_tpl").html() + "<li>no citation</li>");
+        $('#submit_query').attr('disabled', true);
+    }
+  }, 'json')
+
+});
+
+
+
 
 </script>
 

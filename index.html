@@ -122,7 +122,7 @@ $.get("./conf/solr_endpoint", function (solr_endpoint) {
       $("#citations").html($("#citation_tpl").html());
       for (var i=0; i<data.length; i++) {
         //$("#"+data[i].source+"_num").html(data[i].count);
-        $("#sources").html($("#sources").html() + "<input type='radio' name='against' value='"+data[i].id+"'> "+data[i].name+": <span>"+data[i].count+"</span> <a href='"+data[i].url+"'>("+data[i].version+")</a><br/>");
+        $("#sources").html($("#sources").html() + "<input type='radio' name='against' value='"+data[i].source+"'> "+data[i].name+": <span>"+data[i].count+"</span> <a href='"+data[i].url+"'>("+data[i].version+")</a><br/>");
         $("#citations").html($("#citations").html() + "<li>"+data[i].citation+"</li>");
       }
       $('#submit_query').attr('disabled', false);
@@ -140,7 +140,7 @@ $('.solr_endpoints').change(function (e) {
       $("#citations").html($("#citation_tpl").html());
       for (var i=0; i<data.length; i++) {
         //$("#"+data[i].source+"_num").html(data[i].count);
-        $("#sources").html($("#sources").html() + "<input type='radio' name='against' value='"+data[i].id+"'> "+data[i].name+": <span>"+data[i].count+"</span> <a href='"+data[i].url+"'>("+data[i].version+")</a><br/>");
+        $("#sources").html($("#sources").html() + "<input type='radio' name='against' value='"+data[i].source+"'> "+data[i].name+": <span>"+data[i].count+"</span> <a href='"+data[i].url+"'>("+data[i].version+")</a><br/>");
         $("#citations").html($("#citations").html() + "<li>"+data[i].citation+"</li>");
       }
       $('#submit_query').attr('disabled', false);

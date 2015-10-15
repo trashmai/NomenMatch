@@ -11,7 +11,7 @@ require_once "./include/queryNames.php";
 $format = (!empty($_REQUEST['format']))?$_REQUEST['format']:'';
 $against = (!empty($_REQUEST['against']))?$_REQUEST['against']:'';
 $best = (!empty($_REQUEST['best']))?$_REQUEST['best']:'yes';
-$ep = (!empty($_REQUEST['ep']))?$_REQUEST['ep']:file_get_contents("../conf/solr_endpoint");
+$ep = (!empty($_REQUEST['ep']))?$_REQUEST['ep']:file_get_contents(dirname(realpath(__FILE__)).'/conf/solr_endpoint');
 
 $ep = trim($ep, " /\r\n");
 

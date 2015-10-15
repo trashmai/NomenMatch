@@ -81,6 +81,7 @@ Column definition:
 - url_base (when combined with [accepted] name_url_id, it becomes valid url for the taxon, blah blah)  
 for example,
 - citation format
+- source data page
 - date (of source data fetched, downloaded, or created)
 
 Delete source data in solr

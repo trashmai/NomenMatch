@@ -100,3 +100,7 @@ If this script doesn't work, usually it means java heap space out of memory. Try
 Demo
 -----
 http://twebi.net/queryNames/
+
+License
+-----
+This project is licensed under the terms of the GPLv3 (http://www.gnu.org/licenses/gpl-3.0.en.html) license.

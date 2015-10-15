@@ -12,6 +12,7 @@ $f_jo = json_decode(file_get_contents($query_url));
 $fieldCounts = array();
 foreach ($f_jo->facet_counts->facet_fields->source as $idx => $fieldCount) {
 	if ($idx&1) { // odd
+		if (!$fieldCount) continue;
 		$fieldCounts[] = array(
 			'source' => $current_field,
 			'count' => $fieldCount,

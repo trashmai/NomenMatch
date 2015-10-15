@@ -1,6 +1,6 @@
 <?php
 
-require_once "../conf/solr_endpoint.php";
+//require_once "../conf/solr_endpoint.php";
 require_once "../include/functions.php";
 
 $ep = trim(file_get_contents("../conf/solr_endpoint"), " /\r\n");

@@ -356,9 +356,20 @@ function render_table ($data, $time, $hardcsv=false) {
 function render_plain ($data, $time) {
 	header("Content-type: text/plain; charset=utf-8");
 	echo "query time: " . $time . "s\n";
-	echo implode("\t", array_keys($data[0])) . "\n";
+	echo implode("\t", array_keys($data[0][0])) . "\n";
 	foreach ($data as $d) {
-		echo implode("\t", $d) . "\n";
+		foreach ($d as $col) {
+			foreach ($col as $idx => $val) {
+				if (is_array($val)) {
+					$new_val = implode("|", $val);
+				}
+				else {
+					$new_val = implode("|", explode("|", trim($val, "\r\n ")));
+				}
+				$col[$idx] = $new_val;
+			}
+			echo implode("\t", $col) . "\n";
+		}
 	}
 }
 
@@ -370,10 +381,23 @@ function render_csv ($data, $time) {
 	header("Expires: 0");
 	$utf8_bom = "\xEF\xBB\xBF";
 	echo $utf8_bom;
-	echo implode("\t", array_keys($data[0])) . "\n";
+	echo "sep=\t\n";
+	echo implode("\t", array_keys($data[0][0])) . "\n";
 	foreach ($data as $d) {
-		echo implode("\t", $d) . "\n";
+		foreach ($d as $col) {
+			foreach ($col as $idx => $val) {
+				if (is_array($val)) {
+					$new_val = implode("|", $val);
+				}
+				else {
+					$new_val = implode("|", explode("|", trim($val, "\r\n ")));
+				}
+				$col[$idx] = $new_val;
+			}
+			echo implode("\t", $col) . "\n";
+		}
 	}
+
 }
 
 function render_json ($data, $time) {

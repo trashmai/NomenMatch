@@ -6,6 +6,20 @@ $stime = microtime(true);
 
 $names = explode("|", str_replace("\n", "|", @$_REQUEST['names']));
 require_once "./include/functions.php";
+
+if (@$_REQUEST['lang']) {
+	$gui_lang_file = "./conf/lang/error_codes.".$_REQUEST['lang'].".php";
+	if (file_exists($gui_lang_file)) {
+		require_once "./conf/lang/error_codes.".$_REQUEST['lang'].".php";
+	}
+	else {
+		require_once "./conf/lang/error_codes.php";
+	}
+}
+else {
+	require_once "./conf/lang/error_codes.php";
+}
+
 require_once "./include/queryNames.php";
 
 $format = (!empty($_REQUEST['format']))?$_REQUEST['format']:'';

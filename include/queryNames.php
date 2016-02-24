@@ -87,22 +87,22 @@ function queryNames ($name, $against, $best, $ep) {
 
 	// Type 1
 	$query_url_1 = $ep . '&fq=canonical_name:"' . urlencode($name_cleaned) . '"';
-	extract_results($query_url_1, "Type 1: Full match", $reset=false, $against);
+	extract_results($query_url_1, TYPE_1, $reset=false, $against);
 
 	// with minor spell error
 	$query_url_1_err_suggestion = $ep . "&rows=0&spellcheck.q=" . urlencode(implode(" ", $mix2)) ;
-	$suggestion = extract_suggestion ($query_url_1_err_suggestion, "Type 1 Err");
+	$suggestion = extract_suggestion ($query_url_1_err_suggestion, TYPE_1_E);
 	if (!empty($suggestion)) {
 		$query_url_1_err = $ep . '&fq=canonical_name:"' . urlencode("$lpa2 $suggestion") . '"';
-		extract_results($query_url_1_err, "Type 1-e: Full match with minor err", $reset=false, $against);
+		extract_results($query_url_1_err, TYPE_1_E, $reset=false, $against);
 	}
 
 	//*
 	$query_url_1_err_long_suggestion = $ep . "&rows=0&spellcheck.q=" . urlencode($name_cleaned) ;
-	$long_suggestion = extract_suggestion ($query_url_1_err_long_suggestion, "Type 1 Err");
+	$long_suggestion = extract_suggestion ($query_url_1_err_long_suggestion, TYPE_1_E);
 	if (!empty($long_suggestion)) {
 		$query_url_1_err = $ep . '&fq=latin_part_a:' . $lpa2 . '&fq=canonical_name:"' . urlencode("$long_suggestion") . '"';
-		extract_results($query_url_1_err, "Type 1-e: Full match with minor err", $reset=false, $against);
+		extract_results($query_url_1_err, TYPE_1_E, $reset=false, $against);
 	}
 	//*/
 	$all_matched_tmp = extract_results();
@@ -111,17 +111,17 @@ function queryNames ($name, $against, $best, $ep) {
 
 		// Type 2
 		$query_url_2 = $ep . '&fq=latin_part_a:' . urlencode($lpa2) . '&fq=latin_part_bc:(' . urlencode(implode(' OR ', $mix2)) . ")";
-		extract_results($query_url_2, "Type 2: Mixed match", $reset=false, $against);
+		extract_results($query_url_2, TYPE_2, $reset=false, $against);
 
 		// with minor spell error
 		foreach (array_unique($mix2) as $p) {
 			$query_url_2_err_suggestion = $ep . "&rows=0&spellcheck.q=" . urlencode($p) ;
-			$suggestion = extract_suggestion ($query_url_2_err_suggestion, "Type 2-e: Mixed match with minor err");
+			$suggestion = extract_suggestion ($query_url_2_err_suggestion, TYPE_2_E);
 			if (!empty($suggestion)) {
 				$suggestions[] = $suggestion;
 			}
 			$query_url_2_err_long_suggestion = $ep . "&rows=0&spellcheck.q=" . urlencode("$lpa2 $p") ;
-			$long_suggestion = extract_suggestion ($query_url_2_err_long_suggestion, "Type 2-e: Mixed long match with minor err");
+			$long_suggestion = extract_suggestion ($query_url_2_err_long_suggestion, TYPE_2_E);
 			if (!empty($long_suggestion)) {
 				$long_suggestions[] = $long_suggestion;
 			}
@@ -129,21 +129,38 @@ function queryNames ($name, $against, $best, $ep) {
 		if (!empty($suggestions)) {
 			$suggestions = array_unique(array_merge($suggestions, $mix2));
 			$query_url_2_err = $ep . '&fq=latin_part_a:' . urlencode($lpa2) . '&fq=latin_part_bc:(' . urlencode(implode(' OR ', $suggestions)) . ")";
-			extract_results($query_url_2_err, "Type 2-e: Mixed match with minor err", $reset=false, $against);
+			extract_results($query_url_2_err, TYPE_2_E, $reset=false, $against);
 		}
 		if (!empty($long_suggestions)&&(count($mix2)>1)) {
 			foreach ($long_suggestions as $long_suggestion) {
 				$query_url_2_err = $ep . '&fq=canonical_name:"' . urlencode($long_suggestion) . '"';
-				extract_results($query_url_2_err, "Type 2-e: Mixed match with minor err", $reset=false, $against);
+				extract_results($query_url_2_err, TYPE_2_E, $reset=false, $against);
 			}
 		}
 
 		// Genus spell error???
 		$query_url_2_genus_err_suggestion = $ep . "&rows=0&spellcheck.q=" . urlencode($lpa2) ;
-		$suggestion = extract_suggestion ($query_url_2_genus_err_suggestion, "Type 2-ge: Mixed match with minor Genus err");
+		$suggestion = extract_suggestion ($query_url_2_genus_err_suggestion, TYPE_2_GE);
+
+                if (is_null($suggestion)) {
+			$query_url_2_genus_err_suggestion = $ep . "&rows=0&spellcheck.q=" . urlencode($name_cleaned);
+			$suggestion = array_shift(explode(" ", extract_suggestion ($query_url_2_genus_err_suggestion, TYPE_2_GE)));
+
+			if (is_null($suggestion)) {
+				foreach ($mix2 as $mp) {
+					$query_url_2_genus_err_suggestion = $ep . "&rows=0&spellcheck.q=" . urlencode($lpa2 + ' ' + $mp);
+					$suggestion = array_shift(explode(" ", extract_suggestion ($query_url_2_genus_err_suggestion, TYPE_2_GE)));
+					if (!is_null($suggestion)) {
+						break;
+					}
+				}
+			}
+		}
+
+
 		if (treat_word($lpa2, true) == treat_word($suggestion, true)) {
 			$query_url_2_genus_err = $ep . '&fq=latin_part_a:' . urlencode($suggestion) . '&fq=latin_part_bc:(' . urlencode(implode(' OR ', $mix2)) . ")";
-			extract_results($query_url_2_genus_err, "Type 2-gs: Mixed match with Genus err but sounds alike", $reset=false, $against);
+			extract_results($query_url_2_genus_err, TYPE_2_GS, $reset=false, $against);
 		}
 		elseif ((levenshtein($lpa2, $suggestion) == 1)&&(strlen($lpa2)==strlen($suggestion))) {
 			$len = strlen($lpa2);
@@ -151,14 +168,14 @@ function queryNames ($name, $against, $best, $ep) {
 				if ($lpa2[$i] != $suggestion[$i]) {
 					if (similar_char($lpa2[$i], $suggestion[$i], @$lpa2[$i+1], @$suggestion[$i+1])) {
 						$query_url_2_genus_err = $ep . '&fq=latin_part_a:' . urlencode($suggestion) . '&fq=latin_part_bc:(' . urlencode(implode(' OR ', $mix2)) . ")";
-						extract_results($query_url_2_genus_err, "Type 2-gl: Mixed match with Genus err but looks alike", $reset=false, $against);
+						extract_results($query_url_2_genus_err, TYPE_2_GL, $reset=false, $against);
 					}
 				}
 			}
 		}
 		elseif (levenshtein($lpa2, $suggestion) == 1) {
 			$query_url_2_genus_err = $ep . '&fq=latin_part_a:' . urlencode($suggestion) . '&fq=latin_part_bc:(' . urlencode(implode(' OR ', $mix2)) . ")";
-			extract_results($query_url_2_genus_err, "Type 2-gl: Mixed match with Genus length difference", $reset=false, $against);
+			extract_results($query_url_2_genus_err, TYPE_2_GL2, $reset=false, $against);
 		}
 		$all_matched_tmp = extract_results();
 	}
@@ -167,18 +184,18 @@ function queryNames ($name, $against, $best, $ep) {
 		// Type 3
 		$sound = treat_word($name_cleaned);
 		$query_url_3 = $ep . '&fq=sound_name:"' . urlencode($sound) . '"';
-		extract_results($query_url_3, "Type 3-full: Sounds alike", $reset=false, $against);
+		extract_results($query_url_3, TYPE_3_S, $reset=false, $against);
 
 		// Type 3 mix
 		$query_url_3 = $ep . '&fq=sound_part_a:' . urlencode($spa2) . '&fq=sound_part_bc:(' . urlencode(implode(' OR ', $sound_mix2)) . ")";
-		extract_results($query_url_3, "Type 3-mixed: Sounds alike, mixed", $reset=false, $against);
+		extract_results($query_url_3, TYPE_3_S2, $reset=false, $against);
 
 		$sound_mix2_strip_ending = array_map("treat_word", $mix2, array_fill(0, count($mix2), true));
 		$query_url_3_strip_bc_ending = $ep . '&fq=sound_part_a:' . urlencode($spa2) . '&fq=sound_part_bc_strip_ending:(' . urlencode(implode(' OR ', $sound_mix2_strip_ending)) . ")";
-		extract_results($query_url_3_strip_bc_ending, "Type 3-strip-ending: Sounds alike, mixed", $reset=false, $against);
+		extract_results($query_url_3_strip_bc_ending, TYPE3_S3, $reset=false, $against);
 
 		$query_url_3_strip_all_ending = $ep . '&fq=sound_part_a_strip_ending:' . urlencode(treat_word($spa2, true)) . '&fq=sound_part_bc_strip_ending:(' . urlencode(implode(' OR ', $sound_mix2_strip_ending)) . ")";
-		extract_results($query_url_3_strip_all_ending, "Type 3-strip-ending: almost guessing, mixed", $reset=false, $against);
+		extract_results($query_url_3_strip_all_ending, TYPE_3_GUESS, $reset=false, $against);
 
 		$all_matched_tmp = extract_results();
 	}
@@ -310,11 +327,12 @@ function similar_char($a, $b, $aplus1='', $bplus1='') {
 	if (empty($bplus1)) $bplus1 = '';
 
 	$similar_sets = array(
-		array('r' ,'m', 'n'),
-		array('a' , 'd'),
-		array('a' , 'u'),
-		array('c' , 'o'),
-		array('e' , 'o'),
+		array('r','m', 'n'),
+		array('a', 'd'),
+		array('a', 'u'),
+		array('c', 'o'),
+		array('e', 'o'),
+                array('t', 'r'),
 	);
 	$similar_2chrs = array(
 		array('in' ,'m'),

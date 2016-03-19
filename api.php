@@ -262,6 +262,7 @@ function render_table ($data, $time, $hardcsv=false) {
 	$prev_score = -100;
 	foreach ($data as $nidx => $name_d) {
 		foreach ($name_d as $d) {
+			$d['name'] = htmlentities($d['name']);
 			/*
 			if ($d['name'] != $prev_name) {
 				$prev_name = $d['name'];

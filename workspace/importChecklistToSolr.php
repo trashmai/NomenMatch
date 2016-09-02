@@ -56,6 +56,15 @@ $source = (empty($argv[2]))?basename($file, '.csv'):$argv[2];
 while ($vals = fgetcsv($fp, 0, "\t" )) {
 	$vals = array_map("trim", $vals, array_fill(0, count($vals), "\r\n\t ,."));
 
+	if (empty($vals[0]) && empty($vals[1])) {
+		$vals[0] = "sci_hash_" . md5($vals[2]);
+		$vals[1] = $vals[0];
+	}
+	else if (empty($vals[0])) {
+		$vals[0] = $vals[1] . '-s5-v' . md5($vals[2]);
+	}
+
+
 	$rec = array();
 	$rec['id'] = $source . '-' . $vals[0];
 	$rec['source'] = $source;
@@ -81,7 +90,6 @@ while ($vals = fgetcsv($fp, 0, "\t" )) {
 	$rec['sound_kingdom'] = treat_word($rec['kingdom']);
 
 
-
 	$rec['namecode'] = $vals[0];
 //	$rec['taibnet_url'] = "http://taibnet.sinica.edu.tw/chi/taibnet_species_detail.php?name_code=" . $vals[0];
 	if (!empty($vals[1])) {
@@ -92,6 +100,9 @@ while ($vals = fgetcsv($fp, 0, "\t" )) {
 	}
 	$rec['original_name'] = $vals[2];
 	$rec['canonical_name'] = canonical_form($vals[2], true);
+	//if ($rec['canonical_name'] == 'Bombyx pernyi') {
+		//var_dump($rec);
+	//}
 	$rec['sound_name'] = treat_word($rec['canonical_name']);
 	$frags = explode(" ", $rec['canonical_name']);
 	$rec['latin_part_a'] = $frags[0];

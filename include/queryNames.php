@@ -57,6 +57,7 @@ function queryNames ($name, $against, $best, $ep) {
 					'name' => $name,
 					'name_cleaned' => $name_cleaned,
 					'matched' => 'N/A',
+					'matched_clean' => 'N/A',
 					'accepted_namecode' => array(),
 					'namecode' => array(),
 					'source' => array(),
@@ -265,6 +266,7 @@ function extract_results ($query_url="", $msg="", $reset=false, $against="") {
 				unset($all_matched['']);
 				$all_matched[$doc->canonical_name] = array(
 					'matched' => $doc->original_name,
+					'matched_clean' => $doc->canonical_name,
 					'accepted_namecode' => array(@$doc->accepted_namecode),
 					'namecode' => array(@$doc->namecode),
 					'source' => array(array_shift(explode("-", $doc->id))),
@@ -304,6 +306,7 @@ function extract_results ($query_url="", $msg="", $reset=false, $against="") {
 	elseif (empty($all_matched)) {
 		$all_matched[''] = array(
 			'matched' => '',
+			'matched_clean' => '',
 			'accepted_namecode' => array(),
 			'namecode' => array(),
 			'source' => array(),
@@ -331,8 +334,10 @@ function similar_char($a, $b, $aplus1='', $bplus1='') {
 		array('a', 'd'),
 		array('a', 'u'),
 		array('c', 'o'),
+		array('c', 'r'),
 		array('e', 'o'),
                 array('t', 'r'),
+                array('A', 'E'),
 	);
 	$similar_2chrs = array(
 		array('in' ,'m'),

@@ -53,7 +53,9 @@ foreach ($names as $nidx => $name) {
 
 	//ksort($all_matched);
 	foreach ($all_matched as $matched_name => $matched) {
-		$scores[$matched_name] = nameSimilarity($matched_name, $name_cleaned, $matched['type']);
+		//var_dump($matched);
+		//$scores[$matched_name] = nameSimilarity($matched_name, $name_cleaned, $matched['type']);
+		$scores[$matched_name] = nameSimilarity($matched['matched_clean'], $name_cleaned, $matched['type']);
 	}
 	arsort($scores);
 
@@ -176,7 +178,8 @@ foreach ($names as $nidx => $name) {
 
 
 		}
-		
+	
+		$all_matched[$matched_name]['taxonRank'] = detRank($all_matched[$matched_name]['matched'], $all_matched[$matched_name]['matched_clean']);
 		$res[$nidx][] = array_merge(array('score' => round($score/3.5,3)), $all_matched[$matched_name]);
 		if ($best == 'yes') {
 			break;
@@ -441,7 +444,8 @@ function nameSimilarity ($matched, $name, $type=null) {
 
 	if ($matched == 'N/A') return 0;
 
-	$matched_cleaned = canonical_form($matched, true);
+	//$matched_cleaned = canonical_form($matched, true);
+	$matched_cleaned = $matched;
 
 	if (empty($matched_cleaned)) return 0;
 
@@ -554,7 +558,24 @@ echo "</xmp>";
 	return $score - $penalty;
 }
 
-
+function detRank ($sciname, $sciname_clean) {
+	$numParts = count(explode(" ", $sciname_clean));
+	switch ($numParts) {
+		case 2:
+			return 'species';
+			break;
+		case 3:
+			if (preg_match('/ var\.? /', $sciname)) {
+				return 'variety';
+			}
+			else {
+				return 'subspecies';
+			}
+			break;
+		default:
+			return 'unknown';
+	}
+}
 
 
 ?>

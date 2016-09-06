@@ -100,7 +100,7 @@ If this script doesn't work, usually it means java heap space out of memory. Try
 
 Demo
 -----
-http://twebi.net/queryNames/
+http://match.taibif.tw
 
 License
 -----

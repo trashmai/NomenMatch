@@ -1,16 +1,16 @@
-# MyMatch
+# NomeMatch
   
-MyMatch is a tool for taxonomists to match a set of species names against other sets with certain authority. It returns matched names, ids, usage status, and links to original sources. So not only the matched results, users can also know about differences of name usage among different sources.
+NomenMatch is a tool for taxonomists to match a set of species names against other sets with certain authority. It returns matched names, ids, usage status, and links to original sources. So not only the matched results, users can also know about differences of name usage among different sources.
 This is important because we believe that there is no absolute right or wrong, and only different perspectives in taxonomy. This tool provides easily references for taxonomists.
 
-The matching algorithm is derived from taxamatch of Tony Rees (http://www.cmar.csiro.au/datacentre/taxamatch.htm), with some adjustment in workflow and parameters. The major change is that MyMatch can handle trinomial names.
-We developed our own name similarity calculation function, based on levenshitein distance and cross-ranked comparison (e.g. species to subspecies and vise versa) to make sure the order of matched results make sense to taxonomists. 
+The matching algorithm is derived from taxamatch of Tony Rees (http://www.cmar.csiro.au/datacentre/taxamatch.htm), with some adjustment in workflow and parameters. The major change is that NomenMatch can handle trinomial names.
+We developed our own name similarity calculation function, based on [levenshtein distance](https://en.wikipedia.org/wiki/Levenshtein_distance) and cross-ranked comparison (e.g. species to subspecies and vise versa) to make sure the order of matched results make sense to taxonomists. 
 
 Installation
 ------
-Download MyMatch code and put it to a web accessible folder, for example
+Download NomenMatch code and put it to a web accessible folder, for example
 ```
-/var/www/html/mymatch/
+/var/www/html/nomenmatch/
 ```
 
 Dependency
@@ -18,11 +18,12 @@ Dependency
 - Http Server
 - PHP 5+
 - JAVA 7+
-- Solr 4  
+- Solr 4
+
 Download and run solr 4 (http://archive.apache.org/dist/lucene/solr/4.9.1/) with a core using schema.xml and solrconfig.xml in conf/solr-config  
 (It's should also work with other versions of solr with appropriate adjustment to schema.xml and solrconfig.xml)  
 
-Quick start a solr instance compatible to MyMatch:
+Quick start a solr instance compatible to NomenMatch:
 -----
 - Download and extract solr 4.9.1  
 - copy schema.xml and solrconfig.xml in conf/solr-config to [extracted solr]/example/solr/collection1/conf/  

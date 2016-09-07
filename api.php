@@ -286,6 +286,7 @@ function render_table ($data, $time, $hardcsv=false) {
 
 			$ncs = $d['namecode'];
 			$ancs = $d['accepted_namecode'];
+
 			$sources = $d['source'];
 			$url_ids = $d['url_id'];
 			$aurl_ids = $d['a_url_id'];
@@ -310,6 +311,13 @@ function render_table ($data, $time, $hardcsv=false) {
 				$url = $url_base . $url_ids[$src_idx];
 				$aurl = $url_base . $aurl_ids[$src_idx];
 
+				if (strpos($ancs[$src_idx], 'sci_hash_') === 0) {
+					$ancs[$src_idx] = 'No ID';
+				}
+				if (strpos($ncs[$src_idx], 'sci_hash_') === 0) {
+					$ncs[$src_idx] = 'No ID';
+				}
+
 				$html_ncs[$src_idx] = "<a target='_blank' href='$url'>" . $ncs[$src_idx] . "</a>";
 				$html_ancs[$src_idx] = "<a target='_blank' href='$aurl'>" . $ancs[$src_idx] ."</a>";
 
@@ -317,7 +325,7 @@ function render_table ($data, $time, $hardcsv=false) {
 
 
 
-				if ($ncs[$src_idx] == $ancs[$src_idx]) {
+				if ($ncs[$src_idx] == $ancs[$src_idx] && $ncs[$src_idx] !== 'No ID') {
 					$html_sources[$src_idx] = "<font color='#ff0000'>$src</font>";
 				}
 				else {

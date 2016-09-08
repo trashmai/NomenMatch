@@ -1,11 +1,18 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <title>MyMatch</title>
+  <title>NomenMatch</title>
 
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">  
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link href='http://fonts.googleapis.com/css?family=Roboto|Slabo+27px&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+
+  <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/simplex/bootstrap.min.css" rel="stylesheet" integrity="sha384-zF4BRsG/fLiTGfR9QL82DrilZxrwgY/+du4p/c7J72zZj+FLYq4zY00RylP9ZjiT" crossorigin="anonymous">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>  
+
   <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 
+  <link href="css/default.css" rel="stylesheet">
   <style>
 
     body {
@@ -40,15 +47,37 @@
 
 </script>
 
-<h2>Welcome to <a target='_blank' href='https://github.com/trashmai/MyMatch'>MyMatch</a>!</h2>
+<div class="container">
+
+<nav class="navbar navbar-light bg-faded">
+  <h1 class="navbar-brand m-b-0"><a target='_blank' href='https://github.com/TaiBON/NomenMatch'>NomenMatch</a>— a checking tool for scientific names </h1>
+  <div class="collapse navbar-toggleable-xs" id="exCollapsingNavbar2">
+    <a class="navbar-brand" href="#">Responsive navbar</a>
+    <ul class="nav navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Features</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Pricing</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">About</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
 
 <form action="api.php" method='post'>
 <fieldset>
-<table>
+<table class="table table-striped">
 <tr>
 <td>
   <fieldset>
-    <legend>Result Format (回傳格式)</legend>
+    <legend>Result Format<br/>回傳格式</legend>
     <input type='radio' name='format' value='table' checked> TABLE <br/>
     <input type='radio' name='format' value='plain'> PLAIN TEXT <br/>
     <input type='radio' name='format' value='json'> JSON <br/>
@@ -57,7 +86,7 @@
 </td>
 <td>
   <fieldset>
-    <legend>Against Source (比對資料來源)</legend>
+    <legend>Source<br/>比對資料來源</legend>
     <div id='sources'>
       <input type='radio' name='against' value='' checked> ALL <br/>
     </div>
@@ -65,10 +94,10 @@
 </td>
 <td>
   <fieldset>
-    <legend>Only Best Result (只回傳最符合的結果)</legend>
-    <input type='radio' name='best' value='yes' checked> YES (FAST AND SIMPLE) <br/>
-    <input type='radio' name='best' value='mid'> MEDIUM (FAST AND INFORMATIVE)<br/>
-    <input type='radio' name='best' value='no'> NO (SLOW AND MOST INFORMATIVE) <br/>
+    <legend>Best Result Only?<br/>只回傳最符合的結果</legend>
+    <input type='radio' name='best' value='yes' checked> YES (fast and simple)<br/>
+    <input type='radio' name='best' value='mid'> MEDIUM (fast and informative)<br/>
+    <input type='radio' name='best' value='no'> NO (slow and most informative)<br/>
   </fieldset>
 </td>
 <td>
@@ -84,18 +113,17 @@
 </table>
 </fieldset>
 
-<table>
+<table class="table table-striped">
 <tr><td>
 <br/>
 <fieldset>
   <legend>Species Names</legend>
-  <textarea name="names" rows='20' style="width:500px;"></textarea><br/>
+  <textarea class="form-control" rows="15" name="names"></textarea><br/>
 </fieldset>
 </td></tr>
 <tr><td>
 <fieldset>
-  <legend>GOGOGO</legend>
-  <input id='submit_query' type='submit' name='query' value='submit'/>
+  <input class="btn btn-lg btn-primary" id='submit_query' type='submit' name='query' value='Check names'/>
   <!--input type='hidden' name='lang' value='zh'/-->
 </fieldset>
 </td></tr>
@@ -108,6 +136,7 @@
 
 <div id='source_tpl' style='display:none'><input type='radio' name='against' value='' checked> ALL <br/></div>
 <div id='citation_tpl' style='display:none'><div>Data Citations</div></div>
+</div>
 
 <script>
 

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>NomenMatch</title>
+
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">  
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link href='http://fonts.googleapis.com/css?family=Roboto|Slabo+27px&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+
+  <link href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cerulean/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" crossorigin="anonymous"></script>  
+
+  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+
+  <link href="css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-63174146-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+<div class="navbar navbar-fixed-top navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+     <a class="navbar-brand" href='index.html' style="color:#fff" >NomenMatch</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+      <ul class="nav navbar-nav">
+          <li><a href="about.html">About</a></li>
+          <li><a href="index.html">Match</a></li>
+          <li><a href="howto.html">How-To</a></li>
+          <li><a href="#">API</a></li>
+      </ul>
+   </div>
+  </div>
+</div>
+<!-- introduction panel -->
+<div class="container">
+    <div class="page-header">
+        <h1>How-To Documentation</h1>
+    </div>
+    <h3>Quick Tour</h3>
+    <p class="blog-post">
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/1F828QXt8vA" frameborder="0" allowfullscreen></iframe>
+    </p>
+    <h3>How to install?</h3>
+    <p class="blog-post">
+    <h4 id="installation">Installation</h4>
+    <p>Download NomenMatch code and put it to a web accessible folder, for example</p>
+    <pre><code>/var/www/html/nomenmatch/</code></pre>
+    <h4 id="dependency">Dependency</h4>
+    <ul>
+        <li>Http Server</li>
+        <li>PHP 5+</li>
+        <li>JAVA 7+</li>
+        <li>Solr 4</li>
+    </ul>
+    <p>Download and run solr 4 (http://archive.apache.org/dist/lucene/solr/4.9.1/) with a core using schema.xml and solrconfig.xml in conf/solr-config<br />
+    (It's should also work with other versions of solr with appropriate adjustment to schema.xml and solrconfig.xml)</p>
+    <h4 id="quick-start-a-solr-instance-compatible-to-nomenmatch">Quick start a solr instance compatible to NomenMatch:</h4>
+    <ul>
+        <li>Download and extract solr 4.9.1<br />
+        </li>
+        <li>copy schema.xml and solrconfig.xml in conf/solr-config to [extracted solr]/example/solr/collection1/conf/<br />
+        </li>
+        <li><p>cd to [extracted solr]/example/ and run</p>
+        <pre><code>java -jar start.jar</code></pre>
+        <p>The endpoint will be:</p>
+        <pre><code>http://localhost:8983/solr</code></pre></li>
+        </ul>
+        <p>How to stop running:</p>
+        <pre><code>ps aux | grep java
+        kill [pid]</code></pre>
+        <p>That's it!</p>
+        <h4 id="set-solr-endpoint-url">Set Solr Endpoint URL</h4>
+        <p>Edit conf/solr_endpoint, enter your solr endpoint without trailing newline () nor backslash (/), for example</p>
+        <pre><code>http://localhost:8983/solr/taxa</code></pre>
+        <h4 id="import-data-to-solr">Import data to solr</h4>
+        <p>Under workspace dir, run</p>
+        <pre><code>php importChecklistToSolr.php {/path/to/source_data.csv} [source_id]</code></pre>
+        <p>if [source_id] is empty, &quot;source_data&quot; will be used as the source_id</p>
+        <h4 id="source-data-format">Source data format</h4>
+        <p>Tab seperated, see workspace/data/example.csv<br />
+        Column definition: - namecode - accepted_namecode - scientific_name (full name or canonical form is ok) - name_url_id (the id which can be used to create a valid url to a taxon name page) - accepted_name_url_id (the id which can be used to create a valid url to an accepted taxon name page, if the name is a synonym) - family - order - class - phylum - kingdom</p>
+        <h4 id="describe-source-data">Describe source data</h4>
+        <p>Edit conf/sources.example.csv and rename to sources.csv<br />
+        Column definition:<br />
+        - source_id - source_name - url_base (when combined with [accepted] name_url_id, it becomes valid url for the taxon, blah blah)<br />
+        for example, - citation format - source data page - date (of source data fetched, downloaded, or created)</p>
+        <h4 id="delete-source-data-in-solr">Delete source data in solr</h4>
+        <p>Under workspace dir, run</p>
+        <pre><code>php clean_source.php {source_id}</code></pre>
+        <p>To remove a specific source from solr, or run</p>
+        <pre><code>php clean_source.php all</code></pre>
+        <p>To remove all sources at once.<br />
+        If this script doesn't work, usually it means java heap space out of memory. Try to restart solr and then run again.</p>
+
+    </p>
+
+</div>
+
+<footer class="footer">
+  <div class="container">
+        <p class="text-muted">NomenMatch &copy; Jason Mai (TaiBIF/TaiBON Team)</p>
+  </div>
+</footer>
+</body>
+</html>

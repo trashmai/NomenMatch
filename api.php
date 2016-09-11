@@ -231,7 +231,7 @@ function render_table ($data, $time, $hardcsv=false) {
 
 	echo "<head>";
     echo "<link href='http://fonts.googleapis.com/css?family=Roboto|Slabo+27px&subset=latin,latin-ext' rel='stylesheet' type='text/css'>";
-    echo "<link href='https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/spacelab/bootstrap.min.css' rel='stylesheet' integrity='sha384-zF4BRsG/fLiTGfR9QL82DrilZxrwgY/+du4p/c7J72zZj+FLYq4zY00RylP9ZjiT' crossorigin='anonymous'>";
+    echo "<link href='https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cerulean/bootstrap.min.css' rel='stylesheet' integrity='sha384-zF4BRsG/fLiTGfR9QL82DrilZxrwgY/+du4p/c7J72zZj+FLYq4zY00RylP9ZjiT' crossorigin='anonymous'>";
     echo "<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js' integrity='sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa' crossorigin='anonymous'></script>";
 	echo "<script src='https://code.jquery.com/jquery-2.1.4.min.js'></script>";
 	echo "<script src='./js/diff.js'></script>";
@@ -253,6 +253,28 @@ function render_table ($data, $time, $hardcsv=false) {
 	echo "</style>";
 
     echo "<body>";
+    echo "<div class='navbar navbar-fixed-top navbar-default'>";
+    echo "<div class='container-fluid'>";
+    echo "<div class='navbar-header'>";
+    echo "<button type='button' class='navbar-toggle collapsed' data-toggle='collapse' data-target='#bs-example-navbar-collapse-2'>";
+    echo "<span class='sr-only'>Toggle navigation</span>";
+    echo "<span class='icon-bar'></span>";
+    echo "<span class='icon-bar'></span>";
+    echo "<span class='icon-bar'></span>";
+    echo "</button>";
+    echo "<a class='navbar-brand' href='index.html' style='color:#fff' >NomenMatch</a>";
+    echo "</div>";
+    echo "<div class='collapse navbar-collapse' id='bs-example-navbar-collapse-2'>";
+    echo "<ul class='nav navbar-nav'>";
+    echo "<li><a href='about.html'>About</a></li>";
+    echo "<li><a href='index.html'>Match</a></li>";
+    echo "<li><a href='howto.html'>How-To</a></li>";
+    echo "<li><a href='#'>API</a></li>";
+    echo "</ul>";
+    echo "</div>";
+    echo "</div>";
+    echo "</div><div class='container'><br/><br/><br/></div>";
+
     echo "<div class='container'>";
     echo "<h1 class='navbar-brand m-b-0'>Matching results</h1>";
     echo "<br/>";

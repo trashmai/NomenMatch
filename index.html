@@ -7,8 +7,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link href='http://fonts.googleapis.com/css?family=Roboto|Slabo+27px&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
 
-  <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/simplex/bootstrap.min.css" rel="stylesheet" integrity="sha384-zF4BRsG/fLiTGfR9QL82DrilZxrwgY/+du4p/c7J72zZj+FLYq4zY00RylP9ZjiT" crossorigin="anonymous">
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>  
+  <link href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" crossorigin="anonymous"></script>  
 
   <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 
@@ -47,94 +47,83 @@
 
 </script>
 
-<div class="container">
-
-<nav class="navbar navbar-light bg-faded">
-  <h1 class="navbar-brand m-b-0"><a target='_blank' href='https://github.com/TaiBON/NomenMatch'>NomenMatch</a>— a checking tool for scientific names </h1>
-  <div class="collapse navbar-toggleable-xs" id="exCollapsingNavbar2">
-    <a class="navbar-brand" href="#">Responsive navbar</a>
-    <ul class="nav navbar-nav">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Features</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Pricing</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">About</a>
-      </li>
-    </ul>
+<div class="navbar navbar-default navbar-fixed-top navbar-inverse alert-info">
+  <div class="container">
+    <h3 class="navbar-brand"><a target='_blank' href='https://github.com/TaiBON/NomenMatch' style="color:#fff" >NomenMatch</a>— a checking tool for scientific names </h3>
   </div>
-</nav>
-
-
-<form action="api.php" method='post'>
-<fieldset>
-<table class="table table-striped">
-<tr>
-<td>
-  <fieldset>
-    <legend>Result Format<br/>回傳格式</legend>
-    <input type='radio' name='format' value='table' checked> TABLE <br/>
-    <input type='radio' name='format' value='plain'> PLAIN TEXT <br/>
-    <input type='radio' name='format' value='json'> JSON <br/>
-    <input type='radio' name='format' value='csv'> CSV <br/>
-  </fieldset>
-</td>
-<td>
-  <fieldset>
-    <legend>Source<br/>比對資料來源</legend>
-    <div id='sources'>
-      <input type='radio' name='against' value='' checked> ALL <br/>
-    </div>
-  </fieldset>
-</td>
-<td>
-  <fieldset>
-    <legend>Best Result Only?<br/>只回傳最符合的結果</legend>
-    <input type='radio' name='best' value='yes' checked> YES (fast and simple)<br/>
-    <input type='radio' name='best' value='mid'> MEDIUM (fast and informative)<br/>
-    <input type='radio' name='best' value='no'> NO (slow and most informative)<br/>
-  </fieldset>
-</td>
-<td>
-  <fieldset>
-    <legend>Solr Endpoint</legend>
-    <input class='solr_endpoints' id='default_endpoint' type='radio' name='ep' checked> <span id='default_endpoint_name'>DEFAULT</span> (<span id='default_endpoint_host'></span>)<br/>
-    <!--input class='solr_endpoints' type='radio' name='ep' value='http://example.org/solr'> Test solr endpoint selection <br/-->
-    <input class='solr_endpoints' type='radio' name='ep' value='http://jupyter.taibif.tw:8983/solr/taxa'> Instance@140.109.28.80 <br/>
-  </fieldset>
-</td>
-
-</tr>
-</table>
-</fieldset>
-
-<table class="table table-striped">
-<tr><td>
-<br/>
-<fieldset>
-  <legend>Species Names</legend>
-  <textarea class="form-control" rows="15" name="names"></textarea><br/>
-</fieldset>
-</td></tr>
-<tr><td>
-<fieldset>
-  <input class="btn btn-lg btn-primary" id='submit_query' type='submit' name='query' value='Check names'/>
-  <!--input type='hidden' name='lang' value='zh'/-->
-</fieldset>
-</td></tr>
-</table>
-</form>
-
-<div id="citations">
 </div>
+<div class="container">
+<br/>
+</div>
+<div class="container">
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Query settings</h3>
+  </div>
+
+  <div class="panel-body">
+
+    <!-- settings -->
+    <form action="api.php" method='post'>
+    <fieldset>
+    <table class="table table-striped">
+    <tr>
+    <td>Result format:
+        <select name="format" class="form-control" id="format">
+              <option name='format' value='table' selected="selected"/>table</option>
+              <option name='format' value='plain'/>plain text</option>
+              <option name='format' value='json'/>json</option>
+              <option name='format' value='csv'/>csv</option>
+        </select>    
+    </td>
+    <td>
+        <div id='sources'>
+        Sources:
+        <select name="against" class="form-control" id="sources">
+          <option value='' selected="selected"/> ALL <br/>
+        </select>
+        </div>
+    </td>
+    <td>Best results only?
+        <select name="best" class="form-control" id="best">
+            <option value='yes' selected="selected"/> YES (fast and simple)<br/>
+            <option value='mid'/> MEDIUM (fast and informative)<br/>
+            <option value='no'/> NO (slow and most informative)<br/>
+        </select>
+    </td>
+    <td>Solr endpoints
+        <select name="ep" class="form-control solr_endpoints" id="default_endpoint">
+            <option id='default_endpoint' selected="selected" /> <span id='default_endpoint_name'>DEFAULT</span> (<span id='default_endpoint_host'></span>)<br/>
+        <!--input class='solr_endpoints' type='radio' name='ep' value='http://example.org/solr'> Test solr endpoint selection <br/-->
+            <option value='http://jupyter.taibif.tw:8983/solr/taxa'/> Instance@match.taibif.tw<br/>
+        </select>
+    </td>
+    </tr>
+    </table>
+    <!-- /settings -->
+    </div>
+    </div>
+
+    <!-- queryNames -->
+    <div class="panel panel-default">
+        <div class="panel-body">
+           <h3 class="panel-title">Species names<h3/>
+           <textarea class="form-control" rows="15" name="names"></textarea><br/>
+           <input class="btn btn-info" id='submit_query' type='submit' name='query' value='Check names'/>
+            <!--input type='hidden' name='lang' value='zh'/-->
 
 
-<div id='source_tpl' style='display:none'><input type='radio' name='against' value='' checked> ALL <br/></div>
+        </div>
+    </div>
+
+
+    <div id="citations">
+    </div>
+    </form>
+    <!-- /queryNames -->
+
+
+<div id='source_tpl' style='display:none'><option value='' selected='selected'> ALL <br/></div>
 <div id='citation_tpl' style='display:none'><div>Data Citations</div></div>
 </div>
 
@@ -153,7 +142,7 @@ $.get("./conf/solr_endpoint", function (solr_endpoint) {
       $("#citations").html($("#citation_tpl").html());
       for (var i=0; i<data.length; i++) {
         //$("#"+data[i].source+"_num").html(data[i].count);
-        $("#sources").html($("#sources").html() + "<input type='radio' name='against' value='"+data[i].source+"'> "+data[i].name+": <span>"+data[i].count+"</span> <a href='"+data[i].url+"'>("+data[i].version+")</a><br/>");
+        $("#sources").html($("#sources").html() + "<option value='"+data[i].source+"'> "+data[i].name+": <span>"+data[i].count+"</span> <a href='"+data[i].url+"'>("+data[i].version+")</a><br/>");
         $("#citations").html($("#citations").html() + "<li>"+data[i].citation+"</li>");
       }
       $('#submit_query').attr('disabled', false);
@@ -171,7 +160,7 @@ $('.solr_endpoints').change(function (e) {
       $("#citations").html($("#citation_tpl").html());
       for (var i=0; i<data.length; i++) {
         //$("#"+data[i].source+"_num").html(data[i].count);
-        $("#sources").html($("#sources").html() + "<input type='radio' name='against' value='"+data[i].source+"'> "+data[i].name+": <span>"+data[i].count+"</span> <a href='"+data[i].url+"'>("+data[i].version+")</a><br/>");
+        $("#sources").html($("#sources").html() + "<option value='"+data[i].source+"'> "+data[i].name+": <span>"+data[i].count+"</span> <a href='"+data[i].url+"'>("+data[i].version+")</a><br/>");
         $("#citations").html($("#citations").html() + "<li>"+data[i].citation+"</li>");
       }
       $('#submit_query').attr('disabled', false);

@@ -44,7 +44,7 @@
           <li><a href="about.html">About</a></li>
           <li><a href="index.html">Match</a></li>
           <li><a href="howto.html">How-To</a></li>
-          <li><a href="api-doc.html">API</a></li>
+          <li><a href="#">API</a></li>
       </ul>
    </div>
   </div>
@@ -52,19 +52,75 @@
 <!-- introduction panel -->
 <div class="container">
     <div class="page-header">
-        <h1>NomenMatch (MyMatch)</h1>
+        <h1>NomenMatch API documentation</h1>
     </div>
-    <h3>Background</h3>
-    <p class="blog-post">
-    <big>NomenMatch</big> is a tool for taxonomists to match a set of species names against other sets with certain authority. It returns matched names, ids, usage status, and links to original sources. So not only the matched results, users can also know about differences of name usage among different sources. This is important because we believe that there is no absolute right or wrong, and only different perspectives in taxonomy. This tool provides easily references for taxonomists.</p>
-    <h3>Algorithm</h3>
-    <p class="blog-post">The matching algorithm is derived from <a href="http://www.cmar.csiro.au/datacentre/taxamatch.htm">taxamatch</a> of Tony Rees, 
-    with some adjustment in workflow and parameters. The major change is that <big>NomenMatch</big> can handle trinomial names. We developed our own name similarity calculation function, based on <a href="https://en.wikipedia.org/wiki/Levenshtein_distance">Levenshtein distance</a> and cross-ranked comparison (e.g. species to subspecies and vise versa) to make sure the order of matched results make sense to taxonomists.</p>
-    <h3>Source code</h3>
-    <p class="blog-post">NomenMatch is free software and the <a href="https://github.com/TaiBON/NomenMatch">source repository</a> is on <a href="https://github.com">github</a>
 
-    <h3>Authors</h3>
-    <a href="https://github.com/trashmai">Jason Mai</a> (<a href="http://biodiv.sinica.edu.tw">Biodiversity Research Center</a>, Academia Sinica, Taiwan)
+    note: you can use &amp; to combine multiple API functions, for example: 
+    <pre><code>api.php?names=Machilus%20thunbergii&format=table</code></pre>
+    <h2 class="blog-post">api.php</h2>
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">names</h3>
+      </div>
+      <div class="panel-body">
+        <table class="table table-striped">
+        <tr>
+        <td>description</td><td>scientific names, to separate multiple names by pipe (|)</td>
+        </tr>
+        <tr>
+        <td>values</td><td>text</td>
+        </tr>
+        <tr>
+        <td>examples</td><td><a href="api.php?names=Machilus%20thunbergii|Taiwania%20cryptomerioides">api.php?names=Machilus%20thunbergii|Taiwania%20cryptomerioides</a></td>
+        </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">format</h3>
+      </div>
+      <div class="panel-body">
+        <table class="table table-striped">
+        <tr>
+        <td>description</td><td>export format</td>
+        </tr>
+        <tr>
+        <td>values</td><td>table,csv,json,plain</td>
+        </tr>
+        <tr>
+        <td>examples</td><td><a href="api.php?names=Taiwania%20cryptomerioides&format=csv">api.php?names=Taiwania%20cryptomerioides&format=csv</a></td>
+        </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">best</h3>
+      </div>
+      <div class="panel-body">
+        <table class="table table-striped">
+        <tr>
+        <td>description</td><td>best results only</td>
+        </tr>
+        <tr>
+        <td>values</td><td>yes,medium,no</td>
+        </tr>
+        <tr>
+        <td>examples</td><td><a href="api.php?names=Taiwania%20cryptomerioides&best=yes">api.php?names=Taiwania%20cryptomerioides&best=yes</a></td>
+        </tr>
+        </table>
+      </div>
+    </div>
+
+
+
+
+
+        
+
 </div>
 
 <footer class="footer">

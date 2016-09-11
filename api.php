@@ -269,7 +269,7 @@ function render_table ($data, $time, $hardcsv=false) {
     echo "<li><a href='about.html'>About</a></li>";
     echo "<li><a href='index.html'>Match</a></li>";
     echo "<li><a href='howto.html'>How-To</a></li>";
-    echo "<li><a href='#'>API</a></li>";
+    echo "<li><a href='api-doc.html'>API</a></li>";
     echo "</ul>";
     echo "</div>";
     echo "</div>";

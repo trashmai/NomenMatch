@@ -1,4 +1,4 @@
-# NomeMatch
+# NomenMatch
   
 NomenMatch is a tool for taxonomists to match a set of species names against other sets with certain authority. It returns matched names, ids, usage status, and links to original sources. So not only the matched results, users can also know about differences of name usage among different sources.
 This is important because we believe that there is no absolute right or wrong, and only different perspectives in taxonomy. This tool provides easily references for taxonomists.
@@ -101,6 +101,7 @@ If this script doesn't work, usually it means java heap space out of memory. Try
 Demo
 -----
 http://match.taibif.tw
+(a replication of http://twebi.net/queryNames)
 
 License
 -----

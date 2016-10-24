@@ -201,7 +201,10 @@ $(document).ready(function(){
 	        $('#submit_query').attr('disabled', true);
 	    }
 	  }, 'json')
-	
+
+          $('.revision_link').css('display', 'none');
+          $('.revision_link_no_0').css('display', 'inline');
+
 	});
 
         $('#sources').change(function(e) {

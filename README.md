@@ -1,16 +1,16 @@
-# MyMatch
+# NomenMatch
   
-MyMatch is a tool for taxonomists to match a set of species names against other sets with certain authority. It returns matched names, ids, usage status, and links to original sources. So not only the matched results, users can also know about differences of name usage among different sources.
+NomenMatch (renamed from MyMatch) is a tool for taxonomists to match a set of species names against other sets with certain authority. It returns matched names, ids, usage status, and links to original sources. So not only the matched results, users can also know about differences of name usage among different sources.
 This is important because we believe that there is no absolute right or wrong, and only different perspectives in taxonomy. This tool provides easily references for taxonomists.
 
-The matching algorithm is derived from taxamatch of Tony Rees (http://www.cmar.csiro.au/datacentre/taxamatch.htm), with some adjustment in workflow and parameters. The major change is that MyMatch can handle trinomial names.
-We developed our own name similarity calculation function, based on levenshitein distance and cross-ranked comparison (e.g. species to subspecies and vise versa) to make sure the order of matched results make sense to taxonomists. 
+The matching algorithm is derived from taxamatch of Tony Rees (http://www.cmar.csiro.au/datacentre/taxamatch.htm), with some adjustment in workflow and parameters. The major change is that NomenMatch can handle trinomial names.
+We developed our own name similarity calculation function, based on [levenshitein distance](https://en.wikipedia.org/wiki/Levenshtein_distance) and cross-ranked comparison (e.g. species to subspecies and vise versa) to make sure the order of matched results make sense to taxonomists. 
 
 Installation
 ------
-Download MyMatch code and put it to a web accessible folder, for example
+Download NomenMatch code and put it to a web accessible folder, for example
 ```
-/var/www/html/mymatch/
+/var/www/html/nomenmatch/
 ```
 
 Dependency
@@ -18,11 +18,12 @@ Dependency
 - Http Server
 - PHP 5+
 - JAVA 7+
-- Solr 4  
+- Solr 4
+
 Download and run solr 4 (http://archive.apache.org/dist/lucene/solr/4.9.1/) with a core using schema.xml and solrconfig.xml in conf/solr-config  
 (It's should also work with other versions of solr with appropriate adjustment to schema.xml and solrconfig.xml)  
 
-Quick start a solr instance compatible to MyMatch:
+Quick start a solr instance compatible to NomenMatch:
 -----
 - Download and extract solr 4.9.1  
 - copy schema.xml and solrconfig.xml in conf/solr-config to [extracted solr]/example/solr/collection1/conf/  
@@ -81,6 +82,7 @@ Column definition:
 - url_base (when combined with [accepted] name_url_id, it becomes valid url for the taxon, blah blah)  
 for example,
 - citation format
+- source data page
 - date (of source data fetched, downloaded, or created)
 
 Delete source data in solr
@@ -98,4 +100,26 @@ If this script doesn't work, usually it means java heap space out of memory. Try
 
 Demo
 -----
-http://twebi.net/queryNames/
+http://match.taibif.tw
+(a replication of http://twebi.net/queryNames)
+
+Special thans to [Cheng-Tao Lin](mutolisp [at] gmail.com) for documentations and ui refining.
+
+License
+-----
+This project is licensed under the terms of the GPLv3 (http://www.gnu.org/licenses/gpl-3.0.en.html) license.
+
+Copyright (C) 2015 [Jason Guan-Shuo Mai](trashmai [at] gmail.com)
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.

@@ -1,0 +1,18 @@
+body {
+      padding-top: 20px;
+        padding-bottom: 20px;
+    }
+
+    .navbar {
+          height: 15px;
+    }
+    .container {
+        margin-top: 5px;
+        margin-bottom:5px;
+    }
+
+.selector-for-some-widget {
+  -webkit-box-sizing: content-box;
+     -moz-box-sizing: content-box;
+          box-sizing: content-box;
+}

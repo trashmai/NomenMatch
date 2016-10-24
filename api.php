@@ -6,12 +6,26 @@ $stime = microtime(true);
 
 $names = explode("|", str_replace("\n", "|", @$_REQUEST['names']));
 require_once "./include/functions.php";
+
+if (@$_REQUEST['lang']) {
+	$gui_lang_file = "./conf/lang/error_codes.".$_REQUEST['lang'].".php";
+	if (file_exists($gui_lang_file)) {
+		require_once "./conf/lang/error_codes.".$_REQUEST['lang'].".php";
+	}
+	else {
+		require_once "./conf/lang/error_codes.php";
+	}
+}
+else {
+	require_once "./conf/lang/error_codes.php";
+}
+
 require_once "./include/queryNames.php";
 
 $format = (!empty($_REQUEST['format']))?$_REQUEST['format']:'';
 $against = (!empty($_REQUEST['against']))?$_REQUEST['against']:'';
 $best = (!empty($_REQUEST['best']))?$_REQUEST['best']:'yes';
-$ep = (!empty($_REQUEST['ep']))?$_REQUEST['ep']:file_get_contents("../conf/solr_endpoint");
+$ep = (!empty($_REQUEST['ep']))?$_REQUEST['ep']:file_get_contents(dirname(realpath(__FILE__)).'/conf/solr_endpoint');
 
 $ep = trim($ep, " /\r\n");
 
@@ -39,7 +53,9 @@ foreach ($names as $nidx => $name) {
 
 	//ksort($all_matched);
 	foreach ($all_matched as $matched_name => $matched) {
-		$scores[$matched_name] = nameSimilarity($matched_name, $name_cleaned, $matched['type']);
+		//var_dump($matched);
+		//$scores[$matched_name] = nameSimilarity($matched_name, $name_cleaned, $matched['type']);
+		$scores[$matched_name] = nameSimilarity($matched['matched_clean'], $name_cleaned, $matched['type']);
 	}
 	arsort($scores);
 
@@ -162,7 +178,8 @@ foreach ($names as $nidx => $name) {
 
 
 		}
-		
+	
+		$all_matched[$matched_name]['taxonRank'] = detRank($all_matched[$matched_name]['matched'], $all_matched[$matched_name]['matched_clean']);
 		$res[$nidx][] = array_merge(array('score' => round($score/3.5,3)), $all_matched[$matched_name]);
 		if ($best == 'yes') {
 			break;
@@ -176,7 +193,7 @@ $etime = microtime(true);
 render($res, $format, $etime - $stime);
 
 function color_class ($idx) {
-	$colors = array(
+/*	$colors = array(
 		'row_red',
 		'row_orange',
 		'row_yellow',
@@ -184,6 +201,7 @@ function color_class ($idx) {
 		'row_blue',
 		'row_purple',
 	);
+ */
 
 	$colors = array(
 		'row_yellow',
@@ -212,7 +230,10 @@ function render_table ($data, $time, $hardcsv=false) {
 	);
 
 	echo "<head>";
+	echo "<link href='http://fonts.googleapis.com/css?family=Roboto|Slabo+27px&subset=latin,latin-ext' rel='stylesheet' type='text/css'>";
 	echo "<script src='https://code.jquery.com/jquery-2.1.4.min.js'></script>";
+	echo "<link href='https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cerulean/bootstrap.min.css' rel='stylesheet' integrity='sha384-zF4BRsG/fLiTGfR9QL82DrilZxrwgY/+du4p/c7J72zZj+FLYq4zY00RylP9ZjiT' crossorigin='anonymous'>";
+	echo "<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js' integrity='sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa' crossorigin='anonymous'></script>";
 	echo "<script src='./js/diff.js'></script>";
 	echo "</head>";
 
@@ -231,11 +252,39 @@ function render_table ($data, $time, $hardcsv=false) {
 	echo ".row_purple { background:#E9A9FF;}\n";
 	echo "</style>";
 
+	echo "<body>";
+	echo "<div class='navbar navbar-fixed-top navbar-default'>";
+	echo "<div class='container-fluid'>";
+	echo "<div class='navbar-header'>";
+	echo "<button type='button' class='navbar-toggle collapsed' data-toggle='collapse' data-target='#bs-example-navbar-collapse-2'>";
+	echo "<span class='sr-only'>Toggle navigation</span>";
+	echo "<span class='icon-bar'></span>";
+	echo "<span class='icon-bar'></span>";
+	echo "<span class='icon-bar'></span>";
+	echo "</button>";
+	echo "<a class='navbar-brand' href='index.html' style='color:#fff' >NomenMatch</a>";
+	echo "</div>";
+	echo "<div class='collapse navbar-collapse' id='bs-example-navbar-collapse-2'>";
+	echo "<ul class='nav navbar-nav'>";
+	echo "<li><a href='about.html'>About</a></li>";
+	echo "<li><a href='index.html'>Match</a></li>";
+	echo "<li><a href='howto.html'>How-To</a></li>";
+	echo "<li><a href='api-doc.html'>API</a></li>";
+	echo "</ul>";
+	echo "</div>";
+	echo "</div>";
+	echo "</div><div class='container'><br/><br/><br/></div>";
+
+	echo "<div class='container' style='margin-left:50px;'>";
+	echo "<h1 class='navbar-brand m-b-0'>Matching results</h1>";
+	echo "<p>";
 	echo "query time: " . round($time, 3) . " s<br/>";
 	echo "memory usage: " . round(memory_get_usage(true) / (1024 * 1024), 1) . " MB<br/>";
-	echo "Legend: <span style='color:red;'>removed</span> <span style='color:blue;'>added</span> <span style='color:grey;'>common</span>";
-
-	echo "<table>";
+	echo "matched diff: <span style='color:red;'>removed</span> <span style='color:blue;'>added</span> <span style='color:grey;'>common</span><br/>";
+	echo "source: <span style='color:red;'>Accepted</span> <span>Invalid</span>";
+	echo "</p>";
+	
+	echo "<table class='table table-striped table-bordered'>";
 
 	$tmp_data0 = $data[0][0];
 	foreach ($not_show as $ns) {
@@ -248,6 +297,7 @@ function render_table ($data, $time, $hardcsv=false) {
 	$prev_score = -100;
 	foreach ($data as $nidx => $name_d) {
 		foreach ($name_d as $d) {
+			$d['name'] = htmlentities($d['name']);
 			/*
 			if ($d['name'] != $prev_name) {
 				$prev_name = $d['name'];
@@ -264,7 +314,7 @@ function render_table ($data, $time, $hardcsv=false) {
 			$serial_no = $nidx + 1;
 			$row_class = color_class($nidx);
 
-			echo "<tr class='$row_class row_result' id='row_".$serial_no."'><td>$serial_no</td><td>";
+			echo "<tr class='row_result' id='row_".$serial_no."'><td>$serial_no</td><td>";
 
 			$ncs = $d['namecode'];
 			$ancs = $d['accepted_namecode'];
@@ -356,9 +406,20 @@ function render_table ($data, $time, $hardcsv=false) {
 function render_plain ($data, $time) {
 	header("Content-type: text/plain; charset=utf-8");
 	echo "query time: " . $time . "s\n";
-	echo implode("\t", array_keys($data[0])) . "\n";
+	echo implode("\t", array_keys($data[0][0])) . "\n";
 	foreach ($data as $d) {
-		echo implode("\t", $d) . "\n";
+		foreach ($d as $col) {
+			foreach ($col as $idx => $val) {
+				if (is_array($val)) {
+					$new_val = implode("|", $val);
+				}
+				else {
+					$new_val = implode("|", explode("|", trim($val, "\r\n ")));
+				}
+				$col[$idx] = $new_val;
+			}
+			echo implode("\t", $col) . "\n";
+		}
 	}
 }
 
@@ -370,10 +431,23 @@ function render_csv ($data, $time) {
 	header("Expires: 0");
 	$utf8_bom = "\xEF\xBB\xBF";
 	echo $utf8_bom;
-	echo implode("\t", array_keys($data[0])) . "\n";
+	echo "sep=\t\n";
+	echo implode("\t", array_keys($data[0][0])) . "\n";
 	foreach ($data as $d) {
-		echo implode("\t", $d) . "\n";
+		foreach ($d as $col) {
+			foreach ($col as $idx => $val) {
+				if (is_array($val)) {
+					$new_val = implode("|", $val);
+				}
+				else {
+					$new_val = implode("|", explode("|", trim($val, "\r\n ")));
+				}
+				$col[$idx] = $new_val;
+			}
+			echo implode("\t", $col) . "\n";
+		}
 	}
+
 }
 
 function render_json ($data, $time) {
@@ -402,7 +476,8 @@ function nameSimilarity ($matched, $name, $type=null) {
 
 	if ($matched == 'N/A') return 0;
 
-	$matched_cleaned = canonical_form($matched, true);
+	//$matched_cleaned = canonical_form($matched, true);
+	$matched_cleaned = $matched;
 
 	if (empty($matched_cleaned)) return 0;
 
@@ -515,7 +590,25 @@ echo "</xmp>";
 	return $score - $penalty;
 }
 
-
-
+function detRank ($sciname, $sciname_clean) {
+	$numParts = count(explode(" ", $sciname_clean));
+	switch ($numParts) {
+		case 2:
+			return 'species';
+			break;
+		case 3:
+			if (preg_match('/ var\.? /', $sciname)) {
+				return 'variety';
+			}
+			else {
+				return 'subspecies';
+			}
+			break;
+		default:
+			return 'unknown';
+	}
+}
+echo "</div>";
+echo "</body>";
 
 ?>

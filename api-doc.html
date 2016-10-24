@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>NomenMatch</title>
+
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">  
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link href='http://fonts.googleapis.com/css?family=Roboto|Slabo+27px&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+
+  <link href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cerulean/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" crossorigin="anonymous"></script>  
+
+  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+
+  <link href="css/default.css" rel="stylesheet">
+</head>
+
+<body>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-63174146-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+<div class="navbar navbar-fixed-top navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+     <a class="navbar-brand" href='index.html' style="color:#fff" >NomenMatch</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+      <ul class="nav navbar-nav">
+          <li><a href="about.html">About</a></li>
+          <li><a href="index.html">Match</a></li>
+          <li><a href="howto.html">How-To</a></li>
+          <li><a href="#">API</a></li>
+      </ul>
+   </div>
+  </div>
+</div>
+<!-- introduction panel -->
+<div class="container">
+    <div class="page-header">
+        <h1>NomenMatch API documentation</h1>
+    </div>
+
+    note: you can use &amp; to combine multiple API functions, for example: 
+    <pre><code>api.php?names=Machilus%20thunbergii&format=table</code></pre>
+    <h2 class="blog-post">api.php</h2>
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <h3 class="panel-title">names</h3>
+      </div>
+      <div class="panel-body">
+        <table class="table table-striped">
+        <tr>
+        <td>description</td><td>scientific names, to separate multiple names by pipe (|)</td>
+        </tr>
+        <tr>
+        <td>values</td><td>text</td>
+        </tr>
+        <tr>
+        <td>examples</td><td><a href="api.php?names=Machilus%20thunbergii|Taiwania%20cryptomerioides">api.php?names=Machilus%20thunbergii|Taiwania%20cryptomerioides</a></td>
+        </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <h3 class="panel-title">format</h3>
+      </div>
+      <div class="panel-body">
+        <table class="table table-striped">
+        <tr>
+        <td>description</td><td>export format</td>
+        </tr>
+        <tr>
+        <td>values</td><td>table,csv,json,plain</td>
+        </tr>
+        <tr>
+        <td>examples</td><td><a href="api.php?names=Taiwania%20cryptomerioides&format=csv">api.php?names=Taiwania%20cryptomerioides&format=csv</a></td>
+        </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <h3 class="panel-title">best</h3>
+      </div>
+      <div class="panel-body">
+        <table class="table table-striped">
+        <tr>
+        <td>description</td><td>best results only</td>
+        </tr>
+        <tr>
+        <td>values</td><td>yes,medium,no</td>
+        </tr>
+        <tr>
+        <td>examples</td><td><a href="api.php?names=Taiwania%20cryptomerioides&best=yes">api.php?names=Taiwania%20cryptomerioides&best=yes</a></td>
+        </tr>
+        </table>
+      </div>
+    </div>
+
+
+
+
+
+        
+
+</div>
+
+<footer class="footer">
+  <div class="container">
+        <p class="text-muted">NomenMatch &copy; Jason Mai (TaiBIF/TaiBON Team)</p>
+  </div>
+</footer>
+</body>
+</html>

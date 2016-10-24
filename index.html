@@ -1,31 +1,18 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <title>MyMatch</title>
+  <title>NomenMatch</title>
 
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">  
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link href='http://fonts.googleapis.com/css?family=Roboto|Slabo+27px&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+
+  <link href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cerulean/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" crossorigin="anonymous"></script>  
+
   <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 
-  <style>
-
-    body {
-      // font-family: 'Roboto Slab', serif;
-      font-family: 'Roboto Slab', serif;
-    }
-
-    a {
-      color: #428BC9;
-    }
-
-    a:visited {
-      color: #2a6496;
-    }
-
-    a:hover {
-      color: #428BC9;
-    }
-
-  </style>
+  <link href="css/default.css" rel="stylesheet">
 </head>
 
 <body>
@@ -40,77 +27,110 @@
 
 </script>
 
-<h2>Welcome to <a target='_blank' href='https://github.com/trashmai/MyMatch'>MyMatch</a>!</h2>
-
-<form action="api.php" method='post'>
-<fieldset>
-<table>
-<tr>
-<td>
-  <fieldset>
-    <legend>Result Format (回傳格式)</legend>
-    <input type='radio' name='format' value='table' checked> TABLE <br/>
-    <input type='radio' name='format' value='plain'> PLAIN TEXT <br/>
-    <input type='radio' name='format' value='json'> JSON <br/>
-    <input type='radio' name='format' value='csv'> CSV <br/>
-  </fieldset>
-</td>
-<td>
-  <fieldset>
-    <legend>Against Source (比對資料來源)</legend>
-    <div id='sources'>
-      <input type='radio' name='against' value='' checked> ALL <br/>
+<div class="navbar navbar-fixed-top navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+     <a class="navbar-brand" href='#' style="color:#fff" >NomenMatch</a>
     </div>
-  </fieldset>
-</td>
-<td>
-  <fieldset>
-    <legend>Only Best Result (只回傳最符合的結果)</legend>
-    <input type='radio' name='best' value='yes' checked> YES (FAST AND SIMPLE) <br/>
-    <input type='radio' name='best' value='mid'> MEDIUM (FAST AND INFORMATIVE)<br/>
-    <input type='radio' name='best' value='no'> NO (SLOW AND MOST INFORMATIVE) <br/>
-  </fieldset>
-</td>
-<td>
-  <fieldset>
-    <legend>Solr Endpoint</legend>
-    <input class='solr_endpoints' id='default_endpoint' type='radio' name='ep' checked> <span id='default_endpoint_name'>DEFAULT</span> (<span id='default_endpoint_host'></span>)<br/>
-    <!--input class='solr_endpoints' type='radio' name='ep' value='http://example.org/solr'> Test solr endpoint selection <br/-->
-    <input class='solr_endpoints' type='radio' name='ep' value='http://jupyter.taibif.tw:8983/solr/taxa'> Instance@140.109.28.80 <br/>
-  </fieldset>
-</td>
 
-</tr>
-</table>
-</fieldset>
-
-<table>
-<tr><td>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+      <ul class="nav navbar-nav">
+          <li><a href="about.html">About</a></li>
+          <li><a href="index.html">Match</a></li>
+          <li><a href="howto.html">How-To</a></li>
+          <li><a href="api-doc.html">API</a></li>
+      </ul>
+   </div>
+  </div>
+</div>
+<!-- introduction panel -->
+<div class="container">
 <br/>
-<fieldset>
-  <legend>Species Names</legend>
-  <textarea name="names" rows='20' style="width:500px;"></textarea><br/>
-</fieldset>
-</td></tr>
-<tr><td>
-<fieldset>
-  <legend>GOGOGO</legend>
-  <input id='submit_query' type='submit' name='query' value='submit'/>
-  <!--input type='hidden' name='lang' value='zh'/-->
-</fieldset>
-</td></tr>
-</table>
-</form>
+<div class="panel">
+    <div class="panel-body">
+        <h3>NomenMatch (code name: MyMatch): a scientific-name checking tool</h3>
+    </div>
+</div>
+</div>
+<!-- /introduction panel -->
+<div class="container">
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Query settings</h3>
+  </div>
 
-<div id="citations">
+  <div class="panel-body">
+
+    <!-- settings -->
+    <form action="api.php" method='post'>
+    <table class="table">
+    <tr>
+    <td>Result format:
+        <select name="format" class="form-control" id="format">
+              <option name='format' value='table' selected="selected"/>table</option>
+              <option name='format' value='plain'/>plain text</option>
+              <option name='format' value='json'/>json</option>
+              <option name='format' value='csv'/>csv</option>
+        </select>    
+    </td>
+    <td>
+        <div id='sources'>
+        Sources:
+        <select name="against" class="form-control" id="sources">
+          <option value='' selected="selected"/>All<br/>
+        </select>
+        </div>
+    </td>
+    <td>Best results only?
+        <select name="best" class="form-control" id="best">
+            <option value='yes' selected="selected"/>Yes (fast and simple)<br/>
+            <option value='mid'/>Medium (fast and informative)<br/>
+            <option value='no'/>No (slow and most informative)<br/>
+        </select>
+    </td>
+    <td>Solr endpoints
+        <select name="ep" class="solr_endpoints form-control" id="default_endpoint">
+            <option value='http://localhost:8983/solr' selected="selected" /> <span id='default_endpoint_name'>DEFAULT</span> (<span id='default_endpoint_host'></span>)<br/>
+        <!--input class='solr_endpoints' type='radio' name='ep' value='http://example.org/solr'> Test solr endpoint selection <br/-->
+            <option value='http://jupyter.taibif.tw:8983/solr/taxa'/> Instance@match.taibif.tw<br/>
+        </select>
+    </td>
+    </tr>
+    </table>
+    <!-- /settings -->
+    </div>
+    </div>
+
+    <!-- queryNames -->
+    <div class="panel panel-default">
+        <div class="panel-body">
+           <h3 class="panel-title">Scientific names<h3/>
+                   <small>You can input one scientific name per line without or with authors, 
+                       such as <i>Taiwania cryptomerioides</i> or <i>Taiwania cryptomerioides</i> Hayata</small>
+                   <textarea class="form-control" rows="10" name="names" placeholder='Taiwania cryptomerioides'></textarea><br/>
+           <input class="btn btn-primary" id='submit_query' type='submit' name='query' value='Check names'/>
+            <!--input type='hidden' name='lang' value='zh'/-->
+        </div>
+    </div>
+
+
+    <div id="citations">
+    </div>
+    </form>
+    <!-- /queryNames -->
+
+
+<div id='source_tpl' style='display:none'><option value='' selected='selected'> ALL <br/></div>
+<div id='citation_tpl' style='display:none'><div>Data Citations</div></div>
 </div>
 
-
-<div id='source_tpl' style='display:none'><input type='radio' name='against' value='' checked> ALL <br/></div>
-<div id='citation_tpl' style='display:none'><div>Data Citations</div></div>
-
 <script>
-
 // read info from default solr endpoint
 $.get("./conf/solr_endpoint", function (solr_endpoint) {
   var ep = solr_endpoint;
@@ -124,7 +144,7 @@ $.get("./conf/solr_endpoint", function (solr_endpoint) {
       $("#citations").html($("#citation_tpl").html());
       for (var i=0; i<data.length; i++) {
         //$("#"+data[i].source+"_num").html(data[i].count);
-        $("#sources").html($("#sources").html() + "<input type='radio' name='against' value='"+data[i].source+"'> "+data[i].name+": <span>"+data[i].count+"</span> <a href='"+data[i].url+"'>("+data[i].version+")</a><br/>");
+        $("#sources").html($("#sources").html() + "<option value='"+data[i].source+"'> "+data[i].name+": <span>"+data[i].count+"</span> <a href='"+data[i].url+"'>("+data[i].version+")</a><br/>");
         $("#citations").html($("#citations").html() + "<li>"+data[i].citation+"</li>");
       }
       $('#submit_query').attr('disabled', false);
@@ -142,7 +162,7 @@ $('.solr_endpoints').change(function (e) {
       $("#citations").html($("#citation_tpl").html());
       for (var i=0; i<data.length; i++) {
         //$("#"+data[i].source+"_num").html(data[i].count);
-        $("#sources").html($("#sources").html() + "<input type='radio' name='against' value='"+data[i].source+"'> "+data[i].name+": <span>"+data[i].count+"</span> <a href='"+data[i].url+"'>("+data[i].version+")</a><br/>");
+        $("#sources").html($("#sources").html() + "<option value='"+data[i].source+"'> "+data[i].name+": <span>"+data[i].count+"</span> <a href='"+data[i].url+"'>("+data[i].version+")</a><br/>");
         $("#citations").html($("#citations").html() + "<li>"+data[i].citation+"</li>");
       }
       $('#submit_query').attr('disabled', false);
@@ -156,10 +176,12 @@ $('.solr_endpoints').change(function (e) {
 
 });
 
-
-
-
 </script>
+<footer class="footer">
+  <div class="container">
+        <p class="text-muted">NomenMatch &copy; Jason Mai (TaiBIF/TaiBON Team)</p>
+  </div>
+</footer>
 
 </body>
 </html>

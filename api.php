@@ -193,7 +193,7 @@ $etime = microtime(true);
 render($res, $format, $etime - $stime);
 
 function color_class ($idx) {
-	$colors = array(
+/*	$colors = array(
 		'row_red',
 		'row_orange',
 		'row_yellow',
@@ -201,6 +201,7 @@ function color_class ($idx) {
 		'row_blue',
 		'row_purple',
 	);
+ */
 
 	$colors = array(
 		'row_yellow',
@@ -229,6 +230,9 @@ function render_table ($data, $time, $hardcsv=false) {
 	);
 
 	echo "<head>";
+    echo "<link href='http://fonts.googleapis.com/css?family=Roboto|Slabo+27px&subset=latin,latin-ext' rel='stylesheet' type='text/css'>";
+    echo "<link href='https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cerulean/bootstrap.min.css' rel='stylesheet' integrity='sha384-zF4BRsG/fLiTGfR9QL82DrilZxrwgY/+du4p/c7J72zZj+FLYq4zY00RylP9ZjiT' crossorigin='anonymous'>";
+    echo "<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js' integrity='sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa' crossorigin='anonymous'></script>";
 	echo "<script src='https://code.jquery.com/jquery-2.1.4.min.js'></script>";
 	echo "<script src='./js/diff.js'></script>";
 	echo "</head>";
@@ -248,11 +252,39 @@ function render_table ($data, $time, $hardcsv=false) {
 	echo ".row_purple { background:#E9A9FF;}\n";
 	echo "</style>";
 
+    echo "<body>";
+    echo "<div class='navbar navbar-fixed-top navbar-default'>";
+    echo "<div class='container-fluid'>";
+    echo "<div class='navbar-header'>";
+    echo "<button type='button' class='navbar-toggle collapsed' data-toggle='collapse' data-target='#bs-example-navbar-collapse-2'>";
+    echo "<span class='sr-only'>Toggle navigation</span>";
+    echo "<span class='icon-bar'></span>";
+    echo "<span class='icon-bar'></span>";
+    echo "<span class='icon-bar'></span>";
+    echo "</button>";
+    echo "<a class='navbar-brand' href='index.html' style='color:#fff' >NomenMatch</a>";
+    echo "</div>";
+    echo "<div class='collapse navbar-collapse' id='bs-example-navbar-collapse-2'>";
+    echo "<ul class='nav navbar-nav'>";
+    echo "<li><a href='about.html'>About</a></li>";
+    echo "<li><a href='index.html'>Match</a></li>";
+    echo "<li><a href='howto.html'>How-To</a></li>";
+    echo "<li><a href='api-doc.html'>API</a></li>";
+    echo "</ul>";
+    echo "</div>";
+    echo "</div>";
+    echo "</div><div class='container'><br/><br/><br/></div>";
+
+    echo "<div class='container'>";
+    echo "<h1 class='navbar-brand m-b-0'>Matching results</h1>";
+    echo "<br/>";
+    echo "<p>";
 	echo "query time: " . round($time, 3) . " s<br/>";
 	echo "memory usage: " . round(memory_get_usage(true) / (1024 * 1024), 1) . " MB<br/>";
 	echo "Legend: <span style='color:red;'>removed</span> <span style='color:blue;'>added</span> <span style='color:grey;'>common</span>";
-
-	echo "<table>";
+    echo "</p>";
+    
+	echo "<table class='table table-striped table-bordered'>";
 
 	$tmp_data0 = $data[0][0];
 	foreach ($not_show as $ns) {
@@ -282,11 +314,10 @@ function render_table ($data, $time, $hardcsv=false) {
 			$serial_no = $nidx + 1;
 			$row_class = color_class($nidx);
 
-			echo "<tr class='$row_class row_result' id='row_".$serial_no."'><td>$serial_no</td><td>";
+            echo "<tr class='row_result' id='row_".$serial_no."'><td>$serial_no</td><td>";
 
 			$ncs = $d['namecode'];
 			$ancs = $d['accepted_namecode'];
-
 			$sources = $d['source'];
 			$url_ids = $d['url_id'];
 			$aurl_ids = $d['a_url_id'];
@@ -311,13 +342,6 @@ function render_table ($data, $time, $hardcsv=false) {
 				$url = $url_base . $url_ids[$src_idx];
 				$aurl = $url_base . $aurl_ids[$src_idx];
 
-				if (strpos($ancs[$src_idx], 'sci_hash_') === 0) {
-					$ancs[$src_idx] = 'No ID';
-				}
-				if (strpos($ncs[$src_idx], 'sci_hash_') === 0) {
-					$ncs[$src_idx] = 'No ID';
-				}
-
 				$html_ncs[$src_idx] = "<a target='_blank' href='$url'>" . $ncs[$src_idx] . "</a>";
 				$html_ancs[$src_idx] = "<a target='_blank' href='$aurl'>" . $ancs[$src_idx] ."</a>";
 
@@ -325,7 +349,7 @@ function render_table ($data, $time, $hardcsv=false) {
 
 
 
-				if ($ncs[$src_idx] == $ancs[$src_idx] && $ncs[$src_idx] !== 'No ID') {
+				if ($ncs[$src_idx] == $ancs[$src_idx]) {
 					$html_sources[$src_idx] = "<font color='#ff0000'>$src</font>";
 				}
 				else {
@@ -584,6 +608,7 @@ function detRank ($sciname, $sciname_clean) {
 			return 'unknown';
 	}
 }
-
+echo "</div>";
+echo "</body>";
 
 ?>

@@ -8,9 +8,9 @@
   <link href='http://fonts.googleapis.com/css?family=Roboto|Slabo+27px&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
 
   <link href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cerulean/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" crossorigin="anonymous"></script>  
-
   <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+  <!--script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" crossorigin="anonymous"></script-->
+
 
   <link href="css/default.css" rel="stylesheet">
 </head>
@@ -71,7 +71,7 @@
     <form action="api.php" method='post'>
     <table class="table">
     <tr>
-    <td>Result format:
+    <td>Result format
         <select name="format" class="form-control" id="format">
               <option name='format' value='table' selected="selected"/>table</option>
               <option name='format' value='plain'/>plain text</option>
@@ -80,25 +80,34 @@
         </select>    
     </td>
     <td>
-        <div id='sources'>
-        Sources:
-        <select name="against" class="form-control" id="sources">
-          <option value='' selected="selected"/>All<br/>
-        </select>
+        <div id='source_wrapper'>
+        Sources
+          <select name="against" class="form-control" id="sources">
+            <option value='' selected="selected"/>All<br/>
+          </select>
         </div>
     </td>
+    <td>
+        <div id='source_revisions_wrapper'>
+        Version
+          <div id='source_revisions'>
+            <div><a></a></div>
+          </div>
+        </div>
+    </td>
+
     <td>Best results only?
         <select name="best" class="form-control" id="best">
-            <option value='yes' selected="selected"/>Yes (fast and simple)<br/>
-            <option value='mid'/>Medium (fast and informative)<br/>
-            <option value='no'/>No (slow and most informative)<br/>
+            <option value='yes' selected="selected"/>Yes (fast and simple)</option>
+            <option value='mid'/>Medium (fast and informative)</option>
+            <option value='no'/>No (slow and most informative)</option>
         </select>
     </td>
     <td>Solr endpoints
-        <select name="ep" class="solr_endpoints form-control" id="default_endpoint">
-            <option value='http://localhost:8983/solr' selected="selected" /> <span id='default_endpoint_name'>DEFAULT</span> (<span id='default_endpoint_host'></span>)<br/>
+        <select name="ep" class="solr_endpoints form-control" id="solr_endpoint_selector">
+            <option id="default_solr_endpoint" value='http://localhost:8983/solr/taxa' selected="selected" /> DEFAULT (@placeholder) </option>
         <!--input class='solr_endpoints' type='radio' name='ep' value='http://example.org/solr'> Test solr endpoint selection <br/-->
-            <option value='http://jupyter.taibif.tw:8983/solr/taxa'/> Instance@match.taibif.tw<br/>
+            <option value='http://match.taibif.tw:8983/solr/taxa'/> Instance@match.taibif.tw</option>
         </select>
     </td>
     </tr>
@@ -126,56 +135,82 @@
     <!-- /queryNames -->
 
 
-<div id='source_tpl' style='display:none'><option value='' selected='selected'> ALL <br/></div>
+<div id='source_tpl' style='display:none'><option value='' selected='selected'> ALL </option></div>
 <div id='citation_tpl' style='display:none'><div>Data Citations</div></div>
 </div>
 
 <script>
-// read info from default solr endpoint
-$.get("./conf/solr_endpoint", function (solr_endpoint) {
-  var ep = solr_endpoint;
-  // $('#default_endpoint_host').text(ep.split('//')[1].split('/')[0].split(':')[0].replace('localhost', window.location.host));
-  $('#default_endpoint_host').text(ep.replace('localhost', window.location.host).replace('\n', ''));
-  $('#default_endpoint').val(ep);
-  ep_encoded = encodeURIComponent(ep);
-  $.get("count.php?ep=" + ep_encoded, function (data) {
-    if (data.length > 0) {
-      $("#sources").html($("#source_tpl").html());
-      $("#citations").html($("#citation_tpl").html());
-      for (var i=0; i<data.length; i++) {
-        //$("#"+data[i].source+"_num").html(data[i].count);
-        $("#sources").html($("#sources").html() + "<option value='"+data[i].source+"'> "+data[i].name+": <span>"+data[i].count+"</span> <a href='"+data[i].url+"'>("+data[i].version+")</a><br/>");
-        $("#citations").html($("#citations").html() + "<li>"+data[i].citation+"</li>");
-      }
-      $('#submit_query').attr('disabled', false);
-    }
-  }, 'json')
-});
 
+$(document).ready(function(){
+	// read info from default solr endpoint
+	$.get("./conf/solr_endpoint", function (solr_endpoint) {
+	  var ep = solr_endpoint;
+	  //$('#default_endpoint_host').text(ep.split('//')[1].split('/')[0].split(':')[0].replace('localhost', window.location.host));
+          var default_ep_host = $('#default_solr_endpoint').text().replace('@placeholder', ep.replace('localhost', window.location.host).replace('\n', ''));
+	  $('#default_solr_endpoint').text(default_ep_host);
+	  //$('#default_endpoint').val(ep).change();
+	  ep_encoded = encodeURIComponent(ep);
+	  $.get("count.php?ep=" + ep_encoded, function (data) {
+	    if (data.length > 0) {
+	      $("#sources").html($("#source_tpl").html());
+	      $("#citations").html($("#citation_tpl").html());
+              var sources_html = "";
+              var citations_html = "";
+              var revisions_html = "<div style='display:none;' class='revision_link revision_link_no_0'><a>#N/A</a></div>";
+	      for (var i=0; i<data.length; i++) {
+	        //$("#"+data[i].source+"_num").html(data[i].count);
+                sources_html += "<option value='"+data[i].source+"'> "+data[i].name+": "+data[i].count+"</option>";
+                citations_html += "<li>"+data[i].citation+"</li>";
+                revisions_html += "<div style='display:none;' class='revision_link revision_link_no_" + (i+1) + "'><a href='" + data[i].url + "'>" + data[i].version + "</a></div>";
+	      }
 
-// read info from user-selected solr endpoint
-$('.solr_endpoints').change(function (e) {
-  var ep_encoded = encodeURIComponent(this.value);
-  $.get("count.php?ep=" + ep_encoded, function (data) {
-    if (data.length > 0) {
-      $("#sources").html($("#source_tpl").html());
-      $("#citations").html($("#citation_tpl").html());
-      for (var i=0; i<data.length; i++) {
-        //$("#"+data[i].source+"_num").html(data[i].count);
-        $("#sources").html($("#sources").html() + "<option value='"+data[i].source+"'> "+data[i].name+": <span>"+data[i].count+"</span> <a href='"+data[i].url+"'>("+data[i].version+")</a><br/>");
-        $("#citations").html($("#citations").html() + "<li>"+data[i].citation+"</li>");
-      }
-      $('#submit_query').attr('disabled', false);
-    }
-    else {
-        $("#sources").html("no source");
-        $("#citations").html($("#citation_tpl").html() + "<li>no citation</li>");
-        $('#submit_query').attr('disabled', true);
-    }
-  }, 'json')
+              $("#sources").html($("#sources").html()+sources_html);
+              $("#citations").html($("#citations").html()+citations_html);
+              $("#source_revisions").html(revisions_html);
+              $(".revision_link_no_0").css("display", "inline");
 
-});
+	      $('#submit_query').attr('disabled', false);
+	    }
+	  }, 'json')
+	});
+	
+	
+	// read info from user-selected solr endpoint
+	$('.solr_endpoints').change(function (e) {
+	  var ep_encoded = encodeURIComponent(this.value);
+	  $.get("count.php?ep=" + ep_encoded, function (data) {
+	    if (data.length > 0) {
+	      $("#sources").html($("#source_tpl").html());
+	      $("#citations").html($("#citation_tpl").html());
+              var sources_html = "";
+              var citations_html = "";
+              var revisions_html = "<div style='display:none;' class='revision_link revision_link_no_0'><a>#N/A</a></div>";
+	      for (var i=0; i<data.length; i++) {
+	        //$("#"+data[i].source+"_num").html(data[i].count);
+                sources_html += "<option value='"+data[i].source+"'> "+data[i].name+": "+data[i].count+"</option>";
+                citations_html += "<li>"+data[i].citation+"</li>";
+                revisions_html += "<div style='display:none;' class='revision_link revision_link_no_" + (i+1) + "'><a href='" + data[i].url + "'>" + data[i].version + "</a></div>";
+	      }
+              $("#sources").html($("#sources").html()+sources_html);
+              $("#citations").html($("#citations").html()+citations_html);
+	      $('#submit_query').attr('disabled', false);
+	    }
+	    else {
+	        $("#sources").html("no source");
+	        $("#citations").html($("#citation_tpl").html() + "<li>no citation</li>");
+	        $('#submit_query').attr('disabled', true);
+	    }
+	  }, 'json')
+	
+	});
 
+        $('#sources').change(function(e) {
+          var sid = e.target.selectedIndex;
+          $('.revision_link').css('display', 'none');
+          $('.revision_link_no_' + sid).css('display', 'inline');
+        });
+
+});	
 </script>
 <footer class="footer">
   <div class="container">

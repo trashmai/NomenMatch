@@ -1,10 +1,10 @@
 # NomenMatch
   
-NomenMatch is a tool for taxonomists to match a set of species names against other sets with certain authority. It returns matched names, ids, usage status, and links to original sources. So not only the matched results, users can also know about differences of name usage among different sources.
+NomenMatch (renamed from MyMatch) is a tool for taxonomists to match a set of species names against other sets with certain authority. It returns matched names, ids, usage status, and links to original sources. So not only the matched results, users can also know about differences of name usage among different sources.
 This is important because we believe that there is no absolute right or wrong, and only different perspectives in taxonomy. This tool provides easily references for taxonomists.
 
 The matching algorithm is derived from taxamatch of Tony Rees (http://www.cmar.csiro.au/datacentre/taxamatch.htm), with some adjustment in workflow and parameters. The major change is that NomenMatch can handle trinomial names.
-We developed our own name similarity calculation function, based on [levenshtein distance](https://en.wikipedia.org/wiki/Levenshtein_distance) and cross-ranked comparison (e.g. species to subspecies and vise versa) to make sure the order of matched results make sense to taxonomists. 
+We developed our own name similarity calculation function, based on [levenshitein distance](https://en.wikipedia.org/wiki/Levenshtein_distance) and cross-ranked comparison (e.g. species to subspecies and vise versa) to make sure the order of matched results make sense to taxonomists. 
 
 Installation
 ------
@@ -103,6 +103,23 @@ Demo
 http://match.taibif.tw
 (a replication of http://twebi.net/queryNames)
 
+Special thans to Cheng-Tao Lin (mutolisp [at] gmail.com) for documentations and ui refining.
+
 License
 -----
 This project is licensed under the terms of the GPLv3 (http://www.gnu.org/licenses/gpl-3.0.en.html) license.
+
+Copyright (C) 2015 Jason Guan-Shuo Mai (trashmai [at] gmail.com)
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.

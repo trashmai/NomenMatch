@@ -335,6 +335,7 @@ function similar_char($a, $b, $aplus1='', $bplus1='') {
 		array('a', 'u'),
 		array('c', 'o'),
 		array('c', 'r'),
+		array('c', 'e'),
 		array('e', 'o'),
                 array('t', 'r'),
                 array('A', 'E'),

@@ -103,7 +103,7 @@ Demo
 http://match.taibif.tw
 (a replication of http://twebi.net/queryNames)
 
-Special thans to Cheng-Tao Lin (mutolisp [at] gmail.com) for documentations and ui refining.
+Special thanks to Cheng-Tao Lin (mutolisp [at] gmail.com) for documentations and ui refining.
 
 License
 -----

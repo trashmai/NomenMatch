@@ -401,6 +401,9 @@ function render_table ($data, $time, $hardcsv=false) {
 	}
 	echo "</table>\n";
 	echo "<script src='./js/diffName.js'></script>";
+
+	echo "</div>";
+	echo "</body>";
 }
 
 function render_plain ($data, $time) {
@@ -608,7 +611,5 @@ function detRank ($sciname, $sciname_clean) {
 			return 'unknown';
 	}
 }
-echo "</div>";
-echo "</body>";
 
 ?>

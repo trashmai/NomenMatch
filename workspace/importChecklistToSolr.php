@@ -54,7 +54,7 @@ $fp = fopen($file, "r");
 $source = (empty($argv[2]))?basename($file, '.csv'):$argv[2];
 
 while ($vals = fgetcsv($fp, 0, "\t" )) {
-	$vals = array_map("trim", $vals, array_fill(0, count($vals), "\r\n\t ,."));
+	$vals = array_map("trim", $vals, array_fill(0, count($vals), "\r\n\t ,.'\""));
 
 	if (empty($vals[0]) && empty($vals[1])) {
 		$vals[0] = "sci_hash_" . md5($vals[2]);

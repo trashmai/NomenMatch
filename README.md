@@ -103,13 +103,13 @@ Demo
 http://match.taibif.tw
 (a replication of http://twebi.net/queryNames)
 
-Special thans to [Cheng-Tao Lin](mutolisp [at] gmail.com) for documentations and ui refining.
+Special thanks to Cheng-Tao Lin (mutolisp [at] gmail.com) for documentations and ui refining.
 
 License
 -----
 This project is licensed under the terms of the GPLv3 (http://www.gnu.org/licenses/gpl-3.0.en.html) license.
 
-Copyright (C) 2015 [Jason Guan-Shuo Mai](trashmai [at] gmail.com)
+Copyright (C) 2015 Jason Guan-Shuo Mai (trashmai [at] gmail.com)
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

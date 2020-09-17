@@ -3,6 +3,8 @@
 require_once "./include/functions.php";
 
 $src_conf = read_src_conf();
+//echo "<pre>"; print_r($src_conf); echo "</pre>";
+//echo "-----------";
 $ep = (!empty($_REQUEST['ep']))?$_REQUEST['ep']:file_get_contents("./conf/solr_endpoint");
 
 $ep = trim($ep, " /\r\n");
@@ -13,6 +15,7 @@ $fieldCounts = array();
 foreach ($f_jo->facet_counts->facet_fields->source as $idx => $fieldCount) {
 	if ($idx&1) { // odd
 		if (!$fieldCount) continue;
+		//echo "<pre>"; print_r($current_field); echo "</pre>";
 		$fieldCounts[] = array(
 			'source' => $current_field,
 			'count' => $fieldCount,

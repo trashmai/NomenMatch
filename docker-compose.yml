@@ -6,7 +6,7 @@ services:
     ports:
       - "8983:8983"
     volumes:
-      - data:/var/solr
+      - ./data:/var/solr/data
       - ./:/code
     command:
       - solr-precreate
@@ -27,5 +27,7 @@ services:
     image: php:7-fpm
     volumes:
         - ./:/code
-volumes:
-  data:
+#    links:
+#       - solr
+#volumes:
+#  data:

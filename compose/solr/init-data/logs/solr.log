@@ -1,0 +1,115 @@
+2020-09-09 09:03:47.601 INFO  (main) [   ] o.e.j.u.log Logging initialized @1391ms to org.eclipse.jetty.util.log.Slf4jLog
+2020-09-09 09:03:47.690 WARN  (main) [   ] o.e.j.x.XmlConfiguration Ignored arg: <Arg name="threadpool">
+    <New id="threadpool" class="com.codahale.metrics.jetty9.InstrumentedQueuedThreadPool"><Arg name="registry">
+        <Call id="solrJettyMetricRegistry" name="getOrCreate" class="com.codahale.metrics.SharedMetricRegistries"><Arg>solr.jetty</Arg></Call>
+      </Arg></New>
+  </Arg>
+2020-09-09 09:03:47.947 INFO  (main) [   ] o.e.j.s.Server jetty-9.4.27.v20200227; built: 2020-02-27T18:37:21.340Z; git: a304fd9f351f337e7c0e2a7c28878dd536149c6c; jvm 11.0.8+10
+2020-09-09 09:03:47.971 INFO  (main) [   ] o.e.j.d.p.ScanningAppProvider Deployment monitor [file:///opt/solr-8.6.1/server/contexts/] at interval 0
+2020-09-09 09:03:48.310 INFO  (main) [   ] o.e.j.w.StandardDescriptorProcessor NO JSP Support for /solr, did not find org.apache.jasper.servlet.JspServlet
+2020-09-09 09:03:48.322 INFO  (main) [   ] o.e.j.s.session DefaultSessionIdManager workerName=node0
+2020-09-09 09:03:48.323 INFO  (main) [   ] o.e.j.s.session No SessionScavenger set, using defaults
+2020-09-09 09:03:48.327 INFO  (main) [   ] o.e.j.s.session node0 Scavenging every 660000ms
+2020-09-09 09:03:48.452 INFO  (main) [   ] o.a.s.s.SolrDispatchFilter Using logger factory org.apache.logging.slf4j.Log4jLoggerFactory
+2020-09-09 09:03:48.460 INFO  (main) [   ] o.a.s.s.SolrDispatchFilter  ___      _       Welcome to Apache Solr™ version 8.6.1
+2020-09-09 09:03:48.462 INFO  (main) [   ] o.a.s.s.SolrDispatchFilter / __| ___| |_ _   Starting in standalone mode on port 8983
+2020-09-09 09:03:48.462 INFO  (main) [   ] o.a.s.s.SolrDispatchFilter \__ \/ _ \ | '_|  Install dir: /opt/solr
+2020-09-09 09:03:48.464 INFO  (main) [   ] o.a.s.s.SolrDispatchFilter |___/\___/_|_|    Start time: 2020-09-09T09:03:48.464153Z
+2020-09-09 09:03:48.514 INFO  (main) [   ] o.a.s.c.SolrPaths Using system property solr.solr.home: /var/solr/data
+2020-09-09 09:03:48.529 INFO  (main) [   ] o.a.s.c.SolrXmlConfig Loading container configuration from /var/solr/data/solr.xml
+2020-09-09 09:03:48.693 INFO  (main) [   ] o.a.s.c.SolrXmlConfig MBean server found: com.sun.jmx.mbeanserver.JmxMBeanServer@58ce9668, but no JMX reporters were configured - adding default JMX reporter.
+2020-09-09 09:03:49.352 INFO  (main) [   ] o.a.s.h.c.HttpShardHandlerFactory Host whitelist initialized: WhitelistHostChecker [whitelistHosts=null, whitelistHostCheckingEnabled=true]
+2020-09-09 09:03:49.639 WARN  (main) [   ] o.e.j.u.s.S.config Trusting all certificates configured for Client@18460128[provider=null,keyStore=null,trustStore=null]
+2020-09-09 09:03:49.640 WARN  (main) [   ] o.e.j.u.s.S.config No Client EndPointIdentificationAlgorithm configured for Client@18460128[provider=null,keyStore=null,trustStore=null]
+2020-09-09 09:03:49.902 WARN  (main) [   ] o.e.j.u.s.S.config Trusting all certificates configured for Client@20ab3e3a[provider=null,keyStore=null,trustStore=null]
+2020-09-09 09:03:49.902 WARN  (main) [   ] o.e.j.u.s.S.config No Client EndPointIdentificationAlgorithm configured for Client@20ab3e3a[provider=null,keyStore=null,trustStore=null]
+2020-09-09 09:03:50.054 WARN  (main) [   ] o.a.s.c.CoreContainer Not all security plugins configured!  authentication=disabled authorization=disabled.  Solr is only as secure as you make it. Consider configuring authentication/authorization before exposing Solr to users internal or external.  See https://s.apache.org/solrsecurity for more info
+2020-09-09 09:03:50.274 INFO  (main) [   ] o.a.s.c.TransientSolrCoreCacheDefault Allocating transient cache for 2147483647 transient cores
+2020-09-09 09:03:50.277 INFO  (main) [   ] o.a.s.h.a.MetricsHistoryHandler No .system collection, keeping metrics history in memory.
+2020-09-09 09:03:50.375 INFO  (main) [   ] o.a.s.m.r.SolrJmxReporter JMX monitoring for 'solr.node' (registry 'solr.node') enabled at server: com.sun.jmx.mbeanserver.JmxMBeanServer@58ce9668
+2020-09-09 09:03:50.376 INFO  (main) [   ] o.a.s.m.r.SolrJmxReporter JMX monitoring for 'solr.jvm' (registry 'solr.jvm') enabled at server: com.sun.jmx.mbeanserver.JmxMBeanServer@58ce9668
+2020-09-09 09:03:50.390 INFO  (main) [   ] o.a.s.m.r.SolrJmxReporter JMX monitoring for 'solr.jetty' (registry 'solr.jetty') enabled at server: com.sun.jmx.mbeanserver.JmxMBeanServer@58ce9668
+2020-09-09 09:03:50.444 INFO  (main) [   ] o.a.s.c.CorePropertiesLocator Found 1 core definitions underneath /var/solr/data
+2020-09-09 09:03:50.445 INFO  (main) [   ] o.a.s.c.CorePropertiesLocator Cores are: [gettingstarted]
+2020-09-09 09:03:50.531 INFO  (coreLoadExecutor-13-thread-1) [   x:gettingstarted] o.a.s.c.SolrConfig Using Lucene MatchVersion: 8.6.1
+2020-09-09 09:03:50.613 INFO  (main) [   ] o.e.j.s.h.ContextHandler Started o.e.j.w.WebAppContext@2ef8a8c3{/solr,file:///opt/solr-8.6.1/server/solr-webapp/webapp/,AVAILABLE}{/opt/solr-8.6.1/server/solr-webapp/webapp}
+2020-09-09 09:03:50.640 INFO  (main) [   ] o.e.j.s.AbstractConnector Started ServerConnector@4648ce9{HTTP/1.1, (http/1.1, h2c)}{0.0.0.0:8983}
+2020-09-09 09:03:50.641 INFO  (main) [   ] o.e.j.s.Server Started @4436ms
+2020-09-09 09:03:50.756 INFO  (coreLoadExecutor-13-thread-1) [   x:gettingstarted] o.a.s.s.IndexSchema Schema name=default-config
+2020-09-09 09:03:51.526 INFO  (coreLoadExecutor-13-thread-1) [   x:gettingstarted] o.a.s.s.IndexSchema Loaded schema default-config/1.6 with uniqueid field id
+2020-09-09 09:03:51.570 INFO  (coreLoadExecutor-13-thread-1) [   x:gettingstarted] o.a.s.c.CoreContainer Creating SolrCore 'gettingstarted' using configuration from instancedir /var/solr/data/gettingstarted, trusted=true
+2020-09-09 09:03:51.601 INFO  (coreLoadExecutor-13-thread-1) [   x:gettingstarted] o.a.s.m.r.SolrJmxReporter JMX monitoring for 'solr.core.gettingstarted' (registry 'solr.core.gettingstarted') enabled at server: com.sun.jmx.mbeanserver.JmxMBeanServer@58ce9668
+2020-09-09 09:03:51.619 INFO  (coreLoadExecutor-13-thread-1) [   x:gettingstarted] o.a.s.c.SolrCore [[gettingstarted] ] Opening new SolrCore at [/var/solr/data/gettingstarted], dataDir=[/var/solr/data/gettingstarted/data/]
+2020-09-09 09:03:52.340 INFO  (coreLoadExecutor-13-thread-1) [   x:gettingstarted] o.a.s.u.UpdateHandler Using UpdateLog implementation: org.apache.solr.update.UpdateLog
+2020-09-09 09:03:52.341 INFO  (coreLoadExecutor-13-thread-1) [   x:gettingstarted] o.a.s.u.UpdateLog Initializing UpdateLog: dataDir= defaultSyncLevel=FLUSH numRecordsToKeep=100 maxNumLogsToKeep=10 numVersionBuckets=65536
+2020-09-09 09:03:52.359 INFO  (coreLoadExecutor-13-thread-1) [   x:gettingstarted] o.a.s.u.CommitTracker Hard AutoCommit: if uncommitted for 15000ms; 
+2020-09-09 09:03:52.360 INFO  (coreLoadExecutor-13-thread-1) [   x:gettingstarted] o.a.s.u.CommitTracker Soft AutoCommit: disabled
+2020-09-09 09:03:52.399 INFO  (coreLoadExecutor-13-thread-1) [   x:gettingstarted] o.a.s.r.ManagedResourceStorage File-based storage initialized to use dir: /var/solr/data/gettingstarted/conf
+2020-09-09 09:03:52.426 INFO  (coreLoadExecutor-13-thread-1) [   x:gettingstarted] o.a.s.h.c.SpellCheckComponent Initializing spell checkers
+2020-09-09 09:03:52.433 INFO  (coreLoadExecutor-13-thread-1) [   x:gettingstarted] o.a.s.s.DirectSolrSpellChecker init: {name=default,field=_text_,classname=solr.DirectSolrSpellChecker,distanceMeasure=internal,accuracy=0.5,maxEdits=2,minPrefix=1,maxInspections=5,minQueryLength=4,maxQueryFrequency=0.01}
+2020-09-09 09:03:52.447 INFO  (coreLoadExecutor-13-thread-1) [   x:gettingstarted] o.a.s.h.ReplicationHandler Commits will be reserved for 10000 ms
+2020-09-09 09:03:52.457 INFO  (coreLoadExecutor-13-thread-1) [   x:gettingstarted] o.a.s.u.UpdateLog Could not find max version in index or recent updates, using new clock 1677346453540831232
+2020-09-09 09:03:52.462 INFO  (searcherExecutor-15-thread-1-processing-x:gettingstarted) [   x:gettingstarted] o.a.s.c.QuerySenderListener QuerySenderListener done.
+2020-09-09 09:03:52.462 INFO  (searcherExecutor-15-thread-1-processing-x:gettingstarted) [   x:gettingstarted] o.a.s.h.c.SpellCheckComponent Loading spell index for spellchecker: default
+2020-09-09 09:03:52.475 INFO  (searcherExecutor-15-thread-1-processing-x:gettingstarted) [   x:gettingstarted] o.a.s.c.SolrCore [gettingstarted]  Registered new searcher autowarm time: 0 ms
+2020-09-09 09:03:58.806 INFO  (qtp247162961-14) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/cores params={indexInfo=false&wt=json&_=1599642239852} status=0 QTime=7
+2020-09-09 09:03:58.826 INFO  (qtp247162961-19) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/system params={wt=json&_=1599642239853} status=0 QTime=28
+2020-09-09 09:03:58.840 INFO  (qtp247162961-20) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/system params={wt=json&_=1599642239853} status=0 QTime=4
+2020-09-09 09:05:30.902 INFO  (Thread-0) [   ] o.e.j.s.AbstractConnector Stopped ServerConnector@4648ce9{HTTP/1.1, (http/1.1, h2c)}{0.0.0.0:8983}
+2020-09-09 09:05:30.902 INFO  (Thread-0) [   ] o.e.j.s.session node0 Stopped scavenging
+2020-09-09 09:05:30.911 INFO  (Thread-0) [   ] o.a.s.c.CoreContainer Shutting down CoreContainer instance=253380088
+2020-09-09 09:05:30.915 INFO  (coreCloseExecutor-21-thread-1) [   ] o.a.s.c.SolrCore [gettingstarted]  CLOSING SolrCore org.apache.solr.core.SolrCore@48fedb53
+2020-09-09 09:05:30.915 INFO  (coreCloseExecutor-21-thread-1) [   ] o.a.s.m.SolrMetricManager Closing metric reporters for registry=solr.core.gettingstarted tag=SolrCore@48fedb53
+2020-09-09 09:05:30.915 INFO  (coreCloseExecutor-21-thread-1) [   ] o.a.s.m.r.SolrJmxReporter Closing reporter [org.apache.solr.metrics.reporters.SolrJmxReporter@1cc8c5a1: rootName = null, domain = solr.core.gettingstarted, service url = null, agent id = null] for registry solr.core.gettingstarted/com.codahale.metrics.MetricRegistry@47d264d7
+2020-09-09 09:05:30.952 INFO  (coreCloseExecutor-21-thread-1) [   ] o.a.s.u.DirectUpdateHandler2 Committing on IndexWriter.close()  ... SKIPPED (unnecessary).
+2020-09-09 09:05:30.958 ERROR (coreCloseExecutor-21-thread-1) [   ] o.a.s.u.SolrIndexWriter Error closing IndexWriter => java.nio.file.NoSuchFileException: /var/solr/data/gettingstarted/data/index
+	at java.base/sun.nio.fs.UnixException.translateToIOException(Unknown Source)
+java.nio.file.NoSuchFileException: /var/solr/data/gettingstarted/data/index
+	at sun.nio.fs.UnixException.translateToIOException(Unknown Source) ~[?:?]
+	at sun.nio.fs.UnixException.rethrowAsIOException(Unknown Source) ~[?:?]
+	at sun.nio.fs.UnixException.rethrowAsIOException(Unknown Source) ~[?:?]
+	at sun.nio.fs.UnixFileSystemProvider.newDirectoryStream(Unknown Source) ~[?:?]
+	at java.nio.file.Files.newDirectoryStream(Unknown Source) ~[?:?]
+	at org.apache.lucene.store.FSDirectory.listAll(FSDirectory.java:214) ~[?:?]
+	at org.apache.lucene.store.FSDirectory.listAll(FSDirectory.java:233) ~[?:?]
+	at org.apache.lucene.store.NRTCachingDirectory.listAll(NRTCachingDirectory.java:102) ~[?:?]
+	at org.apache.lucene.store.FilterDirectory.listAll(FilterDirectory.java:58) ~[?:?]
+	at org.apache.lucene.index.IndexFileDeleter.refresh(IndexFileDeleter.java:427) ~[?:?]
+	at org.apache.lucene.index.IndexWriter.rollbackInternalNoCommit(IndexWriter.java:2332) ~[?:?]
+	at org.apache.lucene.index.IndexWriter.rollbackInternal(IndexWriter.java:2267) ~[?:?]
+	at org.apache.lucene.index.IndexWriter.shutdown(IndexWriter.java:1100) ~[?:?]
+	at org.apache.lucene.index.IndexWriter.close(IndexWriter.java:1140) ~[?:?]
+	at org.apache.solr.update.SolrIndexWriter.close(SolrIndexWriter.java:298) ~[?:?]
+	at org.apache.solr.update.DirectUpdateHandler2.closeWriter(DirectUpdateHandler2.java:915) ~[?:?]
+	at org.apache.solr.update.DefaultSolrCoreState.closeIndexWriter(DefaultSolrCoreState.java:106) ~[?:?]
+	at org.apache.solr.update.DefaultSolrCoreState.close(DefaultSolrCoreState.java:403) ~[?:?]
+	at org.apache.solr.update.SolrCoreState.decrefSolrCoreState(SolrCoreState.java:84) ~[?:?]
+	at org.apache.solr.core.SolrCore.close(SolrCore.java:1608) ~[?:?]
+	at org.apache.solr.core.SolrCores.lambda$close$0(SolrCores.java:139) ~[?:?]
+	at java.util.concurrent.FutureTask.run(Unknown Source) ~[?:?]
+	at org.apache.solr.common.util.ExecutorUtil$MDCAwareThreadPoolExecutor.lambda$execute$0(ExecutorUtil.java:212) ~[?:?]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source) ~[?:?]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source) ~[?:?]
+	at java.lang.Thread.run(Unknown Source) [?:?]
+	Suppressed: org.apache.lucene.store.AlreadyClosedException: this IndexWriter is closed
+		at org.apache.lucene.index.IndexWriter.ensureOpen(IndexWriter.java:739) ~[?:?]
+		at org.apache.lucene.index.IndexFileDeleter.ensureOpen(IndexFileDeleter.java:346) ~[?:?]
+		at org.apache.lucene.index.IndexFileDeleter.deleteFiles(IndexFileDeleter.java:669) ~[?:?]
+		at org.apache.lucene.index.IndexFileDeleter.decRef(IndexFileDeleter.java:589) ~[?:?]
+		at org.apache.lucene.index.IndexFileDeleter.checkpoint(IndexFileDeleter.java:531) ~[?:?]
+		at org.apache.lucene.index.IndexWriter.rollbackInternalNoCommit(IndexWriter.java:2331) ~[?:?]
+		at org.apache.lucene.index.IndexWriter.rollbackInternal(IndexWriter.java:2267) ~[?:?]
+		at org.apache.lucene.index.IndexWriter.shutdown(IndexWriter.java:1104) ~[?:?]
+		at org.apache.lucene.index.IndexWriter.close(IndexWriter.java:1140) ~[?:?]
+		at org.apache.solr.update.SolrIndexWriter.close(SolrIndexWriter.java:298) ~[?:?]
+		at org.apache.solr.update.DirectUpdateHandler2.closeWriter(DirectUpdateHandler2.java:915) ~[?:?]
+		at org.apache.solr.update.DefaultSolrCoreState.closeIndexWriter(DefaultSolrCoreState.java:106) ~[?:?]
+		at org.apache.solr.update.DefaultSolrCoreState.close(DefaultSolrCoreState.java:403) ~[?:?]
+		at org.apache.solr.update.SolrCoreState.decrefSolrCoreState(SolrCoreState.java:84) ~[?:?]
+		at org.apache.solr.core.SolrCore.close(SolrCore.java:1608) ~[?:?]
+		at org.apache.solr.core.SolrCores.lambda$close$0(SolrCores.java:139) ~[?:?]
+		at java.util.concurrent.FutureTask.run(Unknown Source) ~[?:?]
+		at org.apache.solr.common.util.ExecutorUtil$MDCAwareThreadPoolExecutor.lambda$execute$0(ExecutorUtil.java:212) ~[?:?]
+		at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source) ~[?:?]
+		at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source) ~[?:?]
+		at java.lang.Thread.run(Unknown Source) [?:?]

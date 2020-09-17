@@ -6,6 +6,42 @@ This is important because we believe that there is no absolute right or wrong, a
 The matching algorithm is derived from taxamatch of Tony Rees (http://www.cmar.csiro.au/datacentre/taxamatch.htm), with some adjustment in workflow and parameters. The major change is that NomenMatch can handle trinomial names.
 We developed our own name similarity calculation function, based on [levenshitein distance](https://en.wikipedia.org/wiki/Levenshtein_distance) and cross-ranked comparison (e.g. species to subspecies and vise versa) to make sure the order of matched results make sense to taxonomists. 
 
+
+Install by docker-compose
+----------------
+
+1) build image
+
+```bash
+ $ docker-compose build
+```
+
+2) run devel
+
+```bash
+ $ docker-compose up
+```
+
+3) create solr core (first time)
+
+
+```bash
+  $ docker-compose exec solr bash
+  $ ./bin/solr create_core -c taxa -d ./taxa-conf
+```
+
+
+4) import data (example: TaiCoL)
+
+- prepare source data csv and put it in source-data folder (ex: taicol-checklist.csv)
+- modified souces.csv in data-source (map source id to source info)
+
+```bash
+  $ docker-compose exec php bash
+  $ cd /code/workspace
+  $ php ./importChecklistToSolr.php ../data-source/<taicol-checklist.csv> taicol
+  ```
+
 Installation
 ------
 Download NomenMatch code and put it to a web accessible folder, for example

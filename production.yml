@@ -16,10 +16,10 @@ services:
   nginx:
     image: nginx:latest
     ports:
-        - "8080:80"
+        - "80:80"
     volumes:
         - ./:/code
-        - ./compose/nginx:/etc/nginx/conf.d
+        - ./compose/nginx-production:/etc/nginx/conf.d
   php:
     image: php:7-fpm
     volumes:

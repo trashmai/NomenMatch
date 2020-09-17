@@ -87,6 +87,7 @@ function queryNames ($name, $against, $best, $ep) {
 
 	// Type 1
 	$query_url_1 = $ep . '&fq=canonical_name:"' . urlencode($name_cleaned) . '"';
+        //echo $query_url_1; echo "------";
 	extract_results($query_url_1, TYPE_1, $reset=false, $against);
 
 	// with minor spell error
@@ -256,8 +257,9 @@ function extract_results ($query_url="", $msg="", $reset=false, $against="") {
 		}
 		$query_urls[$query_url] = true;
 		$jo = @json_decode(@file_get_contents($query_url));
-		echo $query_url;
-		echo "<pre>" . var_export($jo, true) . "</pre>";
+                //echo "xxxxxxxxxxxx";
+                //echo $query_url;
+                //echo "<pre>" . var_export($jo, true) . "</pre>";exit();
 	}
 	if (!empty($jo) && $jo->response->numFound > 0) {
 		foreach ($jo->response->docs as $doc) {

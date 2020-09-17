@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+/opt/solr/bin/solr create_core -c taxa -d /opt/solr/nomenmatch-solr8-config

@@ -39,7 +39,7 @@ Install by docker-compose
 ```bash
   $ docker-compose exec php bash
   $ cd /code/workspace
-  $ php ./importChecklistToSolr.php ../data-source/<taicol-checklist.csv> taicol
+  $ php ./importChecklistToSolr.php ../source-data/<taicol-checklist.csv> taicol
   ```
 
 Installation

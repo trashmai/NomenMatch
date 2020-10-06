@@ -4,7 +4,7 @@ services:
   solr:
     build:
       context: ./compose/solr
-      dockerfile: ./compose/solr/Dockerfile
+      #dockerfile: ./compose/solr/Dockerfile
     image: nomenmatch-solr:8
     ports:
       - "8983:8983"

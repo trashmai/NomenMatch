@@ -202,7 +202,7 @@ function queryNames ($name, $against, $best, $ep) {
 	}
 
 	foreach ($all_matched_tmp as $m) {
-		$all_matched[$m['matched'][0]] = array_merge(array('name' => $name, 'name_cleaned' => $name_cleaned), $m);
+		$all_matched[$m['matched']] = array_merge(array('name' => $name, 'name_cleaned' => $name_cleaned), $m);
 	}
 /*
 echo "<xmp>";
@@ -220,13 +220,17 @@ function extract_suggestion ($query_url="", $msg="") {
 //	echo $msg . "\n";
 //	echo "extract suggestion, " . $query_url . "\n";
 	$jo = @json_decode(@file_get_contents($query_url));
-	if (!empty($jo->spellcheck->suggestions)) {
+	// moogoo: solr 8 changed the suggestions result?
+	/*if (!empty($jo->spellcheck->suggestions)) {
 		$vals = array_values($jo->spellcheck->suggestions);
 		//echo "<xmp>";
 		//var_dump($vals);
 		//echo "</xmp>";
 		$idx = array_search("collation", $vals);
 		return trim($vals[0][$idx+1], "()");
+	}*/
+	if (!empty($jo->spellcheck->collations)) {
+		return $jo->spellcheck->collations[1];
 	}
 }
 

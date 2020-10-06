@@ -2,4 +2,4 @@
 
 set -euo pipefail
 
-/opt/solr/bin/solr create_core -c taxa -d /opt/solr/nomenmatch-solr8-config
+/opt/solr/bin/solr create -c taxa -p 8983

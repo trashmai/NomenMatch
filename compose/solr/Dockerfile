@@ -1,10 +1,13 @@
 FROM solr:8
 
-# taxa config directory
-COPY ./compose/solr/taxa-conf taxa-conf
+COPY solrconfig.xml /opt/solr
+COPY schema.xml /opt/solr
 
-# init solr data
-COPY ./compose/solr/init-data /var/solr/data
+#COPY entrypoint /opt/solr/start
 
+#USER root
+#RUN chmod +x /opt/solr/start
 
 CMD ["solr-foreground"]
+
+#ENTRYPOINT ["/opt/solr/start"]

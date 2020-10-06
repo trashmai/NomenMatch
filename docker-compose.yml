@@ -3,8 +3,8 @@ version: '3'
 services:
   solr:
     build:
-      context: .
-      dockerfile: ./compose/solr/Dockerfile
+      context: ./compose/solr
+      #dockerfile: ./compose/solr/Dockerfile
     image: nomenmatch-solr:8
     ports:
       - "8983:8983"

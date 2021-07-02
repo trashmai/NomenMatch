@@ -42,6 +42,27 @@ Install by docker-compose
   $ php ./importChecklistToSolr.php ../source-data/<taicol-checklist.csv> taicol
   ```
 
+
+Update source data in docker
+---------------------------------------
+
+1. prepare source data
+2. copy {source-flie.csv} to nomenmatch AWS server
+```bash=
+$ scp {source-file.csv} {taibif-match}:~/
+```
+3. connect to nomenmatch AWS server and move source flie to source-dir
+```bash=
+$ cd NomenMatch
+$ sudo mv ../{source-file.csv} source-data
+```
+4. get into docker php environment & run import script
+```bash=
+$ docker-compose -f production.yml exec php bash
+$ cd /code/workspace
+$ php ./importChecklistToSolr.php ../source-data/{source-file.csv} taicol
+```
+
 Installation
 ------
 Download NomenMatch code and put it to a web accessible folder, for example

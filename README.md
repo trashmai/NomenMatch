@@ -60,7 +60,7 @@ $ sudo mv ../{source-file.csv} source-data
 ```bash=
 $ docker-compose -f production.yml exec php bash
 $ cd /code/workspace
-$ php ./importChecklistToSolr.php ../source-data/{source-file.csv} taicol
+$ php ./importChecklistToSolr.php ../source-data/{source-file.csv} [source-id]
 ```
 
 Installation

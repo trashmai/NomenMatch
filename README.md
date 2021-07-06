@@ -53,7 +53,7 @@ $ scp {source-file.csv} {taibif-match}:~/
 ```
 3. connect to nomenmatch AWS server and move source flie to source-dir
 ```bash=
-$ cd NomenMatch
+$ cd NomenMatch/
 $ sudo mv ../{source-file.csv} source-data
 ```
 4. get into docker php environment & run import script
@@ -148,7 +148,7 @@ Under workspace dir, run
 ```
 php clean_source.php {source_id}
 ```  
-to removee a specific source from solr, or run  
+to remove a specific source from solr, or run  
 ```
 php clean_source.php all
 ```

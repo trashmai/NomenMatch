@@ -31,10 +31,17 @@ Install by docker-compose
   $ cp schema.xml /var/solr/data/taxa/conf
 ```
 
-4) import data (example: TaiCoL)
+4) prepare data
 
-- prepare source data csv and put it in source-data folder (ex: taicol-checklist.csv)
-- modified souces.csv in data-source (map source id to source info)
+- prepare source data csv and put it in `source-data` folder (ex: taicol-checklist.csv)
+- copy conf/sources.csv to `source-data` folder if `source-data` don't have sources.csv
+- modified souces.csv to map source id and source info
+
+```bash
+  $ cp conf/sources.csv source-data 
+```
+
+5) import data (example: TaiCoL)
 
 ```bash
   $ docker-compose exec php bash
@@ -48,7 +55,7 @@ Update source data in docker
 
 1. prepare source data
 2. copy {source-flie.csv} to nomenmatch AWS server
-```bash=
+```bash
 $ scp {source-file.csv} {taibif-match}:~/
 ```
 3. connect to nomenmatch AWS server and move source flie to source-dir

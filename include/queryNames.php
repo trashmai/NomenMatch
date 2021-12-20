@@ -20,7 +20,6 @@ if (!empty($name)) {
 //*/
 
 function queryNames ($name, $against, $best, $ep) {
-
 	if (empty($ep)) return false;
 
 	$ep .= '/select?wt=json&q=*:*';
@@ -88,6 +87,7 @@ function queryNames ($name, $against, $best, $ep) {
 
 	// Type 1
 	$query_url_1 = $ep . '&fq=canonical_name:"' . urlencode($name_cleaned) . '"';
+        //echo $query_url_1; echo "------";
 	extract_results($query_url_1, TYPE_1, $reset=false, $against);
 
 	// with minor spell error
@@ -134,7 +134,7 @@ function queryNames ($name, $against, $best, $ep) {
 		}
 		if (!empty($long_suggestions)&&(count($mix2)>1)) {
 			foreach ($long_suggestions as $long_suggestion) {
-				$query_url_2_err = $ep . '&fq=canonical_name:"' . urlencode($long_suggestion) . '"';
+                $query_url_2_err = $ep . '&fq=canonical_name:"' . urlencode($long_suggestion) . '"';
 				extract_results($query_url_2_err, TYPE_2_E, $reset=false, $against);
 			}
 		}
@@ -193,7 +193,7 @@ function queryNames ($name, $against, $best, $ep) {
 
 		$sound_mix2_strip_ending = array_map("treat_word", $mix2, array_fill(0, count($mix2), true));
 		$query_url_3_strip_bc_ending = $ep . '&fq=sound_part_a:' . urlencode($spa2) . '&fq=sound_part_bc_strip_ending:(' . urlencode(implode(' OR ', $sound_mix2_strip_ending)) . ")";
-		extract_results($query_url_3_strip_bc_ending, TYPE3_S3, $reset=false, $against);
+		extract_results($query_url_3_strip_bc_ending, TYPE_3_S3, $reset=false, $against);
 
 		$query_url_3_strip_all_ending = $ep . '&fq=sound_part_a_strip_ending:' . urlencode(treat_word($spa2, true)) . '&fq=sound_part_bc_strip_ending:(' . urlencode(implode(' OR ', $sound_mix2_strip_ending)) . ")";
 		extract_results($query_url_3_strip_all_ending, TYPE_3_GUESS, $reset=false, $against);
@@ -220,13 +220,17 @@ function extract_suggestion ($query_url="", $msg="") {
 //	echo $msg . "\n";
 //	echo "extract suggestion, " . $query_url . "\n";
 	$jo = @json_decode(@file_get_contents($query_url));
-	if (!empty($jo->spellcheck->suggestions)) {
+	// moogoo: solr 8 changed the suggestions result?
+	/*if (!empty($jo->spellcheck->suggestions)) {
 		$vals = array_values($jo->spellcheck->suggestions);
-//		echo "<xmp>";
-//		var_dump($vals);
-//		echo "</xmp>";
+		//echo "<xmp>";
+		//var_dump($vals);
+		//echo "</xmp>";
 		$idx = array_search("collation", $vals);
-		return trim($vals[$idx+1], "()");
+		return trim($vals[0][$idx+1], "()");
+	}*/
+	if (!empty($jo->spellcheck->collations)) {
+		return $jo->spellcheck->collations[1];
 	}
 }
 
@@ -257,6 +261,9 @@ function extract_results ($query_url="", $msg="", $reset=false, $against="") {
 		}
 		$query_urls[$query_url] = true;
 		$jo = @json_decode(@file_get_contents($query_url));
+                //echo "xxxxxxxxxxxx";
+                //echo $query_url;
+                //echo "<pre>" . var_export($jo, true) . "</pre>";exit();
 	}
 	if (!empty($jo) && $jo->response->numFound > 0) {
 		foreach ($jo->response->docs as $doc) {
@@ -282,7 +289,6 @@ function extract_results ($query_url="", $msg="", $reset=false, $against="") {
 				);
 			}
 			else {
-
 				if (!in_array(@$doc->namecode, $all_matched[$doc->canonical_name]['namecode'])) {
 					$all_matched[$doc->canonical_name]['namecode'][] = @$doc->namecode;
 					$all_matched[$doc->canonical_name]['source'][] = array_shift(explode("-", $doc->id));

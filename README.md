@@ -6,6 +6,70 @@ This is important because we believe that there is no absolute right or wrong, a
 The matching algorithm is derived from taxamatch of Tony Rees (http://www.cmar.csiro.au/datacentre/taxamatch.htm), with some adjustment in workflow and parameters. The major change is that NomenMatch can handle trinomial names.
 We developed our own name similarity calculation function, based on [levenshitein distance](https://en.wikipedia.org/wiki/Levenshtein_distance) and cross-ranked comparison (e.g. species to subspecies and vise versa) to make sure the order of matched results make sense to taxonomists. 
 
+
+Install by docker-compose
+---------------------------
+
+1) build image
+
+```bash
+ $ docker-compose build
+```
+
+2) run devel
+
+```bash
+ $ docker-compose up
+```
+
+3) create solr core & set custom config (only first time)
+
+```bash
+  $ docker-compose exec solr bash
+  $ ./bin/solr create_core -c taxa
+  $ cp solrconfig.xml /var/solr/data/taxa/conf
+  $ cp schema.xml /var/solr/data/taxa/conf
+```
+
+4) prepare data
+
+- prepare source data csv and put it in `source-data` folder (ex: taicol-checklist.csv)
+- copy conf/sources.csv to `source-data` folder if `source-data` don't have sources.csv
+- modified souces.csv to map source id and source info
+
+```bash
+  $ cp conf/sources.csv source-data 
+```
+
+5) import data (example: TaiCoL)
+
+```bash
+  $ docker-compose exec php bash
+  $ cd /code/workspace
+  $ php ./importChecklistToSolr.php ../source-data/<taicol-checklist.csv> taicol
+  ```
+
+
+Update source data in docker
+---------------------------------------
+
+1. prepare source data
+2. copy {source-flie.csv} to nomenmatch AWS server
+```bash
+$ scp {source-file.csv} {taibif-match}:~/
+```
+3. connect to nomenmatch AWS server and move source flie to source-dir
+```bash=
+$ cd NomenMatch/
+$ sudo mv ../{source-file.csv} source-data
+```
+4. get into docker php environment & run import script
+```bash=
+$ docker-compose -f production.yml exec php bash
+$ cd /code/workspace
+$ php ./importChecklistToSolr.php ../source-data/{source-file.csv} [source-id]
+```
+
 Installation
 ------
 Download NomenMatch code and put it to a web accessible folder, for example
@@ -91,7 +155,7 @@ Under workspace dir, run
 ```
 php clean_source.php {source_id}
 ```  
-to removee a specific source from solr, or run  
+to remove a specific source from solr, or run  
 ```
 php clean_source.php all
 ```

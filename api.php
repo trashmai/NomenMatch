@@ -26,7 +26,6 @@ $format = (!empty($_REQUEST['format']))?$_REQUEST['format']:'';
 $against = (!empty($_REQUEST['against']))?$_REQUEST['against']:'';
 $best = (!empty($_REQUEST['best']))?$_REQUEST['best']:'yes';
 $ep = (!empty($_REQUEST['ep']))?$_REQUEST['ep']:file_get_contents(dirname(realpath(__FILE__)).'/conf/solr_endpoint');
-
 $ep = trim($ep, " /\r\n");
 
 $res = array();
@@ -50,7 +49,7 @@ foreach ($names as $nidx => $name) {
 	//if (empty($name)) continue;
 
 	$all_matched = queryNames($name, $against, $best, $ep);
-
+        //echo '<pre>'.print_r($all_matched).'</pre>';exit();
 	//ksort($all_matched);
 	foreach ($all_matched as $matched_name => $matched) {
 		//var_dump($matched);

@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  solr:
+    build:
+      context: ./compose/solr
+      #dockerfile: ./compose/solr/Dockerfile
+    image: nomenmatch-solr:8
+    ports:
+      - "8983:8983"
+    volumes:
+      - solr-data:/var/solr/data
+    command:
+      - solr-precreate
+      #- gettingstarted
+  nginx:
+    image: nginx:latest
+    ports:
+        - "80:80"
+    volumes:
+        - ./:/code
+        - ./compose/nginx-production:/etc/nginx/conf.d
+  php:
+    image: php:7-fpm
+    volumes:
+        - ./:/code
+        - ./source-data:/code/source-data
+
+volumes:
+  solr-data:

@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+/opt/solr/bin/solr create -c taxa -p 8983

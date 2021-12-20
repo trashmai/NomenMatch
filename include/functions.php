@@ -1,6 +1,6 @@
 <?php
 
-function read_src_conf ($file = "./conf/sources.csv") {
+function read_src_conf ($file = "./source-data/sources.csv") {
 	$lines = file($file);
 	$ret = array();
 	foreach ($lines as $line) {

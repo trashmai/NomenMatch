@@ -77,7 +77,7 @@
               <option name='format' value='plain'/>plain text</option>
               <option name='format' value='json'/>json</option>
               <option name='format' value='csv'/>csv</option>
-        </select>    
+        </select>
     </td>
     <td>
         <div id='source_wrapper'>
@@ -105,7 +105,7 @@
     </td>
     <td>Solr endpoints
         <select name="ep" class="solr_endpoints form-control" id="solr_endpoint_selector">
-            <option id="default_solr_endpoint" value='http://localhost:8983/solr' selected="selected" /> DEFAULT (@placeholder) </option>
+            <option id="default_solr_endpoint" value='http://solr:8983/solr/taxa' selected="selected" /> DEFAULT (@placeholder) </option>
         <!--input class='solr_endpoints' type='radio' name='ep' value='http://example.org/solr'> Test solr endpoint selection <br/-->
             <option value='http://match.taibif.tw:8983/solr'/> Instance@match.taibif.tw</option>
         </select>
@@ -173,8 +173,7 @@ $(document).ready(function(){
 	    }
 	  }, 'json')
 	});
-	
-	
+
 	// read info from user-selected solr endpoint
 	$('.solr_endpoints').change(function (e) {
 	  var ep_encoded = encodeURIComponent(this.value);
@@ -213,7 +212,7 @@ $(document).ready(function(){
           $('.revision_link_no_' + sid).css('display', 'inline');
         });
 
-});	
+});
 </script>
 <footer class="footer">
   <div class="container">
